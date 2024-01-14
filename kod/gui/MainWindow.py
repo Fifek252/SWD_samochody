@@ -9,13 +9,13 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QMessageBox, QStackedWidget
-from TopsisScreen import Ui_TopsisScreen
+from PyQt5.QtWidgets import QMessageBox
 
 from screen import Screen
 
-class Ui_MainScreen(object):
-    def __init__(self, MainScreen, gui):
+class Ui_MainScreen(QtWidgets.QMainWindow):
+    def __init__(self, MainScreen,gui):
+        super().__init__()
         self.gui = gui
         self.checked_boxes = [] 
              
