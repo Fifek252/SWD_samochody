@@ -19,7 +19,7 @@ class Ui_TopsisScreen(object):
         self.label = QtWidgets.QLabel(TopsisScreen)
         self.label.setGeometry(QtCore.QRect(-10, 0, 801, 881))
         self.label.setText("")
-        self.label.setPixmap(QtGui.QPixmap("background.jpg"))
+        self.label.setPixmap(QtGui.QPixmap("kod\\gui\\background.jpg"))
         self.label.setScaledContents(True)
         self.label.setObjectName("label")
         self.tytul_topsis = QtWidgets.QLabel(TopsisScreen)

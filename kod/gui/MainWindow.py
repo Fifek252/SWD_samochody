@@ -11,11 +11,11 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox, QStackedWidget
 from TopsisScreen import Ui_TopsisScreen
-from gui import Gui, Screen
 
+from screen import Screen
 
 class Ui_MainScreen(object):
-    def __init__(self, MainScreen, gui: Gui):
+    def __init__(self, MainScreen, gui):
         self.gui = gui
         self.checked_boxes = [] 
              
@@ -27,7 +27,7 @@ class Ui_MainScreen(object):
         self.background = QtWidgets.QLabel(self.centralwidget)
         self.background.setGeometry(QtCore.QRect(0, 0, 801, 821))
         self.background.setText("")
-        self.background.setPixmap(QtGui.QPixmap("background.jpg"))
+        self.background.setPixmap(QtGui.QPixmap("kod\\gui\\background.jpg"))
         self.background.setScaledContents(True)
         self.background.setObjectName("background")
         self.rsm = QtWidgets.QPushButton(self.centralwidget)
@@ -117,7 +117,7 @@ class Ui_MainScreen(object):
         else:
             self.checked_boxes.remove(checkbox.text())
 
-    def _nothing_checked(self):
+    def enough_checked(self):
         if len(self.checked_boxes) < 2:
             msg = QMessageBox()
             msg.setText("Proszę wybrać przynajmniej 2 kryteria.")
@@ -127,23 +127,23 @@ class Ui_MainScreen(object):
         return True
     
     def gotoTopsis(self):
-        flag = self._nothing_checked()
+        flag = self.enough_checked()
         if flag:
             self.gui.show_screen(Screen.TOPSIS)
     
     
 
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    widget = QStackedWidget()
-    widget.setFixedHeight(876)
-    widget.setFixedWidth(783)
+# if __name__ == "__main__":
+#     import sys
+#     app = QtWidgets.QApplication(sys.argv)
+#     widget = QStackedWidget()
+#     widget.setFixedHeight(876)
+#     widget.setFixedWidth(783)
 
-    MainScreen = QtWidgets.QMainWindow()
-    widget.addWidget(MainScreen)
-    ui = Ui_MainScreen()
-    ui.setupUi(MainScreen)
-    widget.show()
+#     MainScreen = QtWidgets.QMainWindow()
+#     widget.addWidget(MainScreen)
+#     ui = Ui_MainScreen()
+#     ui.setupUi(MainScreen)
+#     widget.show()
 
-    sys.exit(app.exec_())
+#     sys.exit(app.exec_())

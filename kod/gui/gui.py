@@ -2,17 +2,10 @@ from PyQt5 import  QtWidgets
 from PyQt5.QtWidgets import QStackedWidget
 import sys
 
-from enum import Enum, auto
+from screen import Screen
 
 from MainWindow import Ui_MainScreen
 from TopsisScreen import Ui_TopsisScreen
-
-class Screen(Enum):
-    MAIN = auto()
-    TOPSIS = auto()
-    RSM = auto()
-    UTA = auto()
-    SP = auto()
 
 class Gui:
     '''
@@ -25,11 +18,12 @@ class Gui:
         ustalenie wielkości okna
         inicjalizacja stosu ekranów
         '''
-        app = QtWidgets.QApplication(sys.argv)
-        widget = QStackedWidget()
-        widget.setFixedHeight(876)
-        widget.setFixedWidth(783)
-        sys.exit(app.exec_())
+        self.app = QtWidgets.QApplication(sys.argv)
+        self.widget = QStackedWidget()
+        self.widget.setFixedHeight(876)
+        self.widget.setFixedWidth(783)
+        self.show_screen(Screen.MAIN)
+        sys.exit(self.app.exec_())
 
     def show_screen(self, screen: Screen) -> None:
         window = QtWidgets.QMainWindow()
@@ -53,6 +47,4 @@ class Gui:
 
 
 if __name__ == "__main__":
-    import sys
     gui = Gui()
-    gui.show_screen(Screen.MAIN)
