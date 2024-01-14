@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>TopsisScreen</class>
- <widget class="QWidget" name="TopsisScreen">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>781</width>
-    <height>878</height>
+    <width>762</width>
+    <height>868</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,10 +16,10 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>801</width>
-     <height>881</height>
+     <x>-30</x>
+     <y>10</y>
+     <width>761</width>
+     <height>851</height>
     </rect>
    </property>
    <property name="text">
@@ -32,11 +32,11 @@
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QLabel" name="tytul_topsis">
+  <widget class="QLabel" name="tytul">
    <property name="geometry">
     <rect>
      <x>190</x>
-     <y>500</y>
+     <y>470</y>
      <width>421</width>
      <height>61</height>
     </rect>
@@ -48,33 +48,33 @@
     <enum>QFrame::Box</enum>
    </property>
    <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:20pt; font-weight:600; color:#ffffff;&quot;&gt;Metoda Topsis&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:20pt; font-weight:600; color:#ffffff;&quot;&gt;Metoda RSM&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
-  <widget class="QLabel" name="info_topsis">
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>550</y>
+     <width>201</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ffffff;&quot;&gt;Podaj zbiór punktów status-quo:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>560</y>
-     <width>761</width>
+     <y>690</y>
+     <width>201</width>
      <height>41</height>
     </rect>
    </property>
    <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600; color:#ffffff;&quot;&gt;Proszę nadać wagi wybranym kryteriom. Wagi muszą mieć łączną sumę 1!!!.&lt;br/&gt;W przeciwnym razie kryteria zostaną potraktowane równoważnie.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="topsis">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>440</y>
-     <width>111</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Menu</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ffffff;&quot;&gt;Podaj zbiór punktów aspiracji:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
  </widget>

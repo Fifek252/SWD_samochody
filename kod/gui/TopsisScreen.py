@@ -9,50 +9,53 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
 from screen import Screen
 
-class Ui_TopsisScreen(object):
-    def __init__(self, TopsisScreen, gui):
+class Ui_TopsisScreen(QtWidgets.QMainWindow):
+    def __init__(self, TopsisScreen,gui):
+        super().__init__()
         self.gui = gui
 
         TopsisScreen.setObjectName("TopsisScreen")
         TopsisScreen.resize(781, 878)
-
-        self.label = QtWidgets.QLabel(TopsisScreen)
-        self.label.setGeometry(QtCore.QRect(-10, 0, 801, 881))
+        self.centralwidget = QtWidgets.QWidget(TopsisScreen)
+        self.centralwidget.setObjectName("centralwidget")
+        self.label = QtWidgets.QLabel(self.centralwidget)
+        self.label.setGeometry(QtCore.QRect(0, 0, 801, 881))
         self.label.setText("")
         self.label.setPixmap(QtGui.QPixmap("kod\\gui\\background.jpg"))
         self.label.setScaledContents(True)
         self.label.setObjectName("label")
-
-        self.tytul_topsis = QtWidgets.QLabel(TopsisScreen)
+        self.tytul_topsis = QtWidgets.QLabel(self.centralwidget)
         self.tytul_topsis.setGeometry(QtCore.QRect(190, 500, 421, 61))
         self.tytul_topsis.setStyleSheet("border-color: rgb(159, 255, 124);")
         self.tytul_topsis.setFrameShape(QtWidgets.QFrame.Box)
         self.tytul_topsis.setObjectName("tytul_topsis")
-
-        self.info_topsis = QtWidgets.QLabel(TopsisScreen)
+        self.info_topsis = QtWidgets.QLabel(self.centralwidget)
         self.info_topsis.setGeometry(QtCore.QRect(10, 560, 761, 41))
         self.info_topsis.setObjectName("info_topsis")
-
-        self.menu = QtWidgets.QPushButton(TopsisScreen)
-        self.menu.setGeometry(QtCore.QRect(662, 590, 101, 28))
-        self.menu.setObjectName("menu")
-        self.menu.clicked.connect(self.go_to_main)
+        self.menu_topsis = QtWidgets.QPushButton(self.centralwidget)
+        self.menu_topsis.setGeometry(QtCore.QRect(30, 440, 111, 41))
+        self.menu_topsis.setObjectName("menu_topsis")
+        self.menu_topsis.clicked.connect(lambda: self.gui.show_screen(Screen.MAIN))
+        TopsisScreen.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(TopsisScreen)
+        self.menubar.setGeometry(QtCore.QRect(0,0,783,26))
+        self.menubar.setObjectName("menubar")
+        TopsisScreen.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar(TopsisScreen)
+        self.statusbar.setObjectName("statusbar")
+        TopsisScreen.setStatusBar(self.statusbar)
 
         self.retranslate_Ui(TopsisScreen)
         QtCore.QMetaObject.connectSlotsByName(TopsisScreen)
 
     def retranslate_Ui(self, TopsisScreen):
         _translate = QtCore.QCoreApplication.translate
-        TopsisScreen.setWindowTitle(_translate("TopsisScreen", "Form"))
+        TopsisScreen.setWindowTitle(_translate("TopsisScreen", "TopsisScreen"))
         self.tytul_topsis.setText(_translate("TopsisScreen", "<html><head/><body><p align=\"center\"><span style=\" font-size:20pt; font-weight:600; color:#ffffff;\">Metoda Topsis</span></p><p align=\"center\"><br/></p></body></html>"))
         self.info_topsis.setText(_translate("TopsisScreen", "<html><head/><body><p align=\"center\"><span style=\" font-weight:600; color:#ffffff;\">Proszę nadać wagi wybranym kryteriom. Wagi muszą mieć łączną sumę 1!!!.<br/>W przeciwnym razie kryteria zostaną potraktowane równoważnie.</span></p></body></html>"))
-        self.menu.setText(_translate("TopsisScreen", "Menu"))
-    
-    def go_to_main(self):
-        self.gui.show_screen(Screen.MAIN)
+        self.menu_topsis.setText(_translate("TopsisScreen", "Menu"))
 
 
 # if __name__ == "__main__":
