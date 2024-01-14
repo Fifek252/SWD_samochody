@@ -32,17 +32,16 @@ class Gui:
         if screen == Screen.TOPSIS:
             self.show_topsis(window)
 
-
     def show_main(self, window):
         Ui_MainScreen(window, self)
         self.widget.addWidget(window)
-        self.widget.setCurrentWidget(window)
+        self.widget.setCurrentIndex(self.widget.currentIndex() + 1)
         self.widget.show()
 
     def show_topsis(self, window):
         Ui_TopsisScreen(window, self)
         self.widget.addWidget(window)
-        self.widget.setCurrentWidget(window)
+        self.widget.setCurrentIndex(self.widget.currentIndex() + 1)
         self.widget.show()
 
 

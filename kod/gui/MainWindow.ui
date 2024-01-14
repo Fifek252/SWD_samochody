@@ -210,7 +210,7 @@
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ffffff;&quot;&gt;Wybierz metodę tworzenia rankingu:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="safety_pr">
+   <widget class="QPushButton" name="sp">
     <property name="geometry">
      <rect>
       <x>660</x>
