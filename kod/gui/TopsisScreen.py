@@ -11,32 +11,58 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from screen import Screen
 
+INPUT_X = 30
+INPUT_Y_START = 600
+
 class Ui_TopsisScreen(QtWidgets.QMainWindow):
-    def __init__(self, TopsisScreen,gui):
+    def __init__(self, TopsisScreen,gui,criteria):
         super().__init__()
         self.gui = gui
+        self.criteria = criteria
+        self.weights = []
+        
         TopsisScreen.setObjectName("TopsisScreen")
         TopsisScreen.resize(781, 878)
         self.centralwidget = QtWidgets.QWidget(TopsisScreen)
         self.centralwidget.setObjectName("centralwidget")
+        
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(0, 0, 801, 881))
         self.label.setText("")
         self.label.setPixmap(QtGui.QPixmap("kod\\gui\\background.jpg"))
         self.label.setScaledContents(True)
         self.label.setObjectName("label")
+        
         self.tytul_topsis = QtWidgets.QLabel(self.centralwidget)
-        self.tytul_topsis.setGeometry(QtCore.QRect(190, 500, 421, 61))
+        self.tytul_topsis.setGeometry(QtCore.QRect(190, 450, 421, 61))
         self.tytul_topsis.setStyleSheet("border-color: rgb(159, 255, 124);")
         self.tytul_topsis.setFrameShape(QtWidgets.QFrame.Box)
         self.tytul_topsis.setObjectName("tytul_topsis")
+        
         self.info_topsis = QtWidgets.QLabel(self.centralwidget)
-        self.info_topsis.setGeometry(QtCore.QRect(10, 560, 761, 41))
+        self.info_topsis.setGeometry(QtCore.QRect(10, 490, 761, 41))
         self.info_topsis.setObjectName("info_topsis")
+
         self.menu_topsis = QtWidgets.QPushButton(self.centralwidget)
-        self.menu_topsis.setGeometry(QtCore.QRect(30, 440, 111, 41))
+        self.menu_topsis.setGeometry(QtCore.QRect(30, 400, 111, 41))
         self.menu_topsis.setObjectName("menu_topsis")
-        self.menu_topsis.clicked.connect(lambda: self.gui.show_screen(Screen.MAIN))
+        self.menu_topsis.clicked.connect(lambda: self.go_to_main())
+        
+        for i,crit in enumerate(self.criteria):
+            crit_label = QtWidgets.QLabel(self.centralwidget)
+            crit_label.setGeometry(QtCore.QRect(INPUT_X, INPUT_Y_START+i*50, 140, 41))
+            crit_label.setObjectName(crit)
+            crit_label.setText(f"{crit}:")
+            crit_label.setStyleSheet("color: white;")
+            self.criteria[i] = crit_label
+            
+            weight_input = QtWidgets.QLineEdit(self.centralwidget)
+            weight_input.setGeometry(QtCore.QRect(INPUT_X+150,INPUT_Y_START+i*50,100,40))
+            weight_input.setObjectName(f"weight_{crit}")
+            weight_input.setStyleSheet("color: black;")
+            self.weights.append(weight_input)
+            
+        
         TopsisScreen.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(TopsisScreen)
         self.menubar.setGeometry(QtCore.QRect(0,0,783,26))
@@ -55,7 +81,10 @@ class Ui_TopsisScreen(QtWidgets.QMainWindow):
         self.tytul_topsis.setText(_translate("TopsisScreen", "<html><head/><body><p align=\"center\"><span style=\" font-size:20pt; font-weight:600; color:#ffffff;\">Metoda Topsis</span></p><p align=\"center\"><br/></p></body></html>"))
         self.info_topsis.setText(_translate("TopsisScreen", "<html><head/><body><p align=\"center\"><span style=\" font-weight:600; color:#ffffff;\">Proszę nadać wagi wybranym kryteriom. Wagi muszą mieć łączną sumę 1!!!.<br/>W przeciwnym razie kryteria zostaną potraktowane równoważnie.</span></p></body></html>"))
         self.menu_topsis.setText(_translate("TopsisScreen", "Menu"))
-
+        
+    def go_to_main(self):
+        self.gui.show_main()
+    def dupa(self): print("dupa")
 
 # if __name__ == "__main__":
 #     import sys

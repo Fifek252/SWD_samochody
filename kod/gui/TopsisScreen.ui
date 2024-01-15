@@ -16,7 +16,7 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>0</x>
+     <x>-20</x>
      <y>0</y>
      <width>801</width>
      <height>881</height>
@@ -35,7 +35,7 @@
   <widget class="QLabel" name="tytul_topsis">
    <property name="geometry">
     <rect>
-     <x>190</x>
+     <x>180</x>
      <y>500</y>
      <width>421</width>
      <height>61</height>
@@ -54,7 +54,7 @@
   <widget class="QLabel" name="info_topsis">
    <property name="geometry">
     <rect>
-     <x>10</x>
+     <x>0</x>
      <y>560</y>
      <width>761</width>
      <height>41</height>
@@ -67,7 +67,7 @@
   <widget class="QPushButton" name="menu_topsis">
    <property name="geometry">
     <rect>
-     <x>30</x>
+     <x>20</x>
      <y>440</y>
      <width>111</width>
      <height>41</height>

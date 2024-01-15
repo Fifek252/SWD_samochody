@@ -22,33 +22,38 @@ class Gui:
         self.widget = QStackedWidget()
         self.widget.setFixedHeight(876)
         self.widget.setFixedWidth(783)
-        self.show_screen(Screen.MAIN)
-        sys.exit(self.app.exec_())
 
-    def show_screen(self, screen: Screen) -> None:
+
+    # def show_screen(self, screen: Screen) -> None:
+    #     window = QtWidgets.QMainWindow()
+    #     if screen == Screen.MAIN:
+    #         self.show_main(window)
+    #     if screen == Screen.TOPSIS:
+    #         self.topsis_screen = window
+    #         self.show_topsis(window)
+
+    def show_main(self):
         window = QtWidgets.QMainWindow()
-        if screen == Screen.MAIN:
-            self.show_main(window)
-        if screen == Screen.TOPSIS:
-            self.topsis_screen = window
-            self.show_topsis(window)
-
-    def show_main(self, window):
         Ui_MainScreen(window, self)
         if self.widget.indexOf(window) == -1:
             self.widget.addWidget(window)
         self.widget.setCurrentWidget(window)
         self.widget.show()
 
-    def show_topsis(self, window):
-        Ui_TopsisScreen(window, self)
+    def show_topsis(self, criteria):
+        window = QtWidgets.QMainWindow()
+        Ui_TopsisScreen(window, self,criteria)
         if self.widget.indexOf(window) == -1:
             self.widget.addWidget(window)
-        print(self.widget)
         self.widget.setCurrentWidget(window)
         self.widget.show()
-
+        
+    def run(self):
+        self.show_main()
+        sys.exit(self.app.exec_())
+        
 
 if __name__ == "__main__":
     gui = Gui()
+    gui.run()
     
