@@ -28,7 +28,7 @@ class Ui_MainScreen(QtWidgets.QMainWindow):
         self.centralwidget.setObjectName("centralwidget")
         
         self.background = QtWidgets.QLabel(self.centralwidget)
-        self.background.setGeometry(QtCore.QRect(0, 0, 801, 821))
+        self.background.setGeometry(QtCore.QRect(0, 0, 801, 881))
         self.background.setText("")
         self.background.setPixmap(QtGui.QPixmap("kod\\gui\\background.jpg"))
         self.background.setScaledContents(True)
@@ -41,7 +41,6 @@ class Ui_MainScreen(QtWidgets.QMainWindow):
         self.tytul = QtWidgets.QLabel(self.centralwidget)
         self.tytul.setGeometry(QtCore.QRect(190, 450, 421, 61))
         self.tytul.setStyleSheet("border-color: rgb(159, 255, 124);")
-        self.tytul.setFrameShape(QtWidgets.QFrame.Box)
         self.tytul.setObjectName("tytul")
         
         self.topsis = QtWidgets.QPushButton(self.centralwidget)
@@ -129,11 +128,10 @@ class Ui_MainScreen(QtWidgets.QMainWindow):
         self.safety_pr.setText(_translate("MainScreen", "Safety principle"))
 
     def update_checked_boxes(self,checkbox):
-        if checkbox.isChecked and checkbox.text() not in self.checked_boxes:
+        if checkbox.isChecked() and checkbox.text() not in self.checked_boxes:
             self.checked_boxes.append(checkbox.text())
         else:
             self.checked_boxes.remove(checkbox.text())
-
 
     def enough_checked(self):
         if len(self.checked_boxes) < 2:
