@@ -23,15 +23,6 @@ class Gui:
         self.widget.setFixedHeight(876)
         self.widget.setFixedWidth(783)
 
-
-    # def show_screen(self, screen: Screen) -> None:
-    #     window = QtWidgets.QMainWindow()
-    #     if screen == Screen.MAIN:
-    #         self.show_main(window)
-    #     if screen == Screen.TOPSIS:
-    #         self.topsis_screen = window
-    #         self.show_topsis(window)
-
     def show_main(self):
         window = QtWidgets.QMainWindow()
         Ui_MainScreen(window, self)
