@@ -14,16 +14,10 @@ from screen import Screen
 INPUT_X = 30
 INPUT_Y_START = 600
 
-class Ui_TopsisScreen(QtWidgets.QMainWindow):
+class Ui_TopsisScreen:
     def __init__(self, TopsisScreen,gui,criteria):
-        super().__init__()
         self.gui = gui
         self.criteria = criteria
-        self.inputs = [0 for _ in self.criteria]
-        self.ok_buttons = []
-        self.crits = []
-        self.weights = [0 for _ in self.criteria]
-        self.sum_weights = sum(self.weights)
         
         TopsisScreen.setObjectName("TopsisScreen")
         TopsisScreen.resize(781, 878)
@@ -46,42 +40,20 @@ class Ui_TopsisScreen(QtWidgets.QMainWindow):
         self.info_topsis.setGeometry(QtCore.QRect(10, 490, 761, 41))
         self.info_topsis.setObjectName("info_topsis")
 
-        self.menu_topsis = QtWidgets.QPushButton(self.centralwidget)
-        self.menu_topsis.setGeometry(QtCore.QRect(30, 400, 111, 41))
-        self.menu_topsis.setObjectName("menu_topsis")
-        self.menu_topsis.clicked.connect(lambda: self.gui.show_main())
+        self.menu = QtWidgets.QPushButton(self.centralwidget)
+        self.menu.setGeometry(QtCore.QRect(20, 400, 111, 41))
+        self.menu.setObjectName("menu")
+        self.menu.clicked.connect(lambda: self.gui.show_main())
         
         ''' Tworzenie pól na wpisywanie wag w zależności od zaznaczonych na MainWIndow kryteriów'''
-        for i,crit in enumerate(sorted(self.criteria)):
-            crit_label = QtWidgets.QLabel(self.centralwidget)
-            crit_label.setGeometry(QtCore.QRect(INPUT_X, INPUT_Y_START+i*50, 140, 41))
-            crit_label.setObjectName(crit)
-            crit_label.setText(f"{crit}:")
-            crit_label.setStyleSheet("color: white;")
-            self.crits.append(crit_label)
-            
-            weight_input = QtWidgets.QLineEdit(self.centralwidget)
-            weight_input.setGeometry(QtCore.QRect(INPUT_X+150,INPUT_Y_START+i*50,100,40))
-            weight_input.setObjectName(f"weight_{crit}")
-            weight_input.setStyleSheet("color: black;")
-            weight_input.setFont(QtGui.QFont("Arial",12))
-            weight_input.setText("0")
-            self.inputs[i] = weight_input
-            self.inputs[i].textChanged.connect(lambda _,idx = i: self.inputs[idx].setStyleSheet("background-color: #ffffff;"))
-            
-            ok = QtWidgets.QPushButton(self.centralwidget)
-            ok.setGeometry(QtCore.QRect(INPUT_X+255, INPUT_Y_START+i*50, 30, 30))
-            ok.setObjectName(f"ok_{crit}")
-            ok.setText(f"OK")
-            self.ok_buttons.append(ok)
-            ok.clicked.connect(lambda _,idx = i: self.assign_weight(idx))
+        self.make_interface()
         
-        self.even = QtWidgets.QCheckBox(self.centralwidget)
-        self.even.setGeometry(INPUT_X,INPUT_Y_START-50,100,20)
-        self.even.setStyleSheet("color: rgb(255, 255, 255);")
-        self.even.setObjectName("rowne_wagi")
-        self.even.setText("Równoważne")
-        self.even.stateChanged.connect(lambda: self.even_weights())
+        self.rownowazne = QtWidgets.QCheckBox(self.centralwidget)
+        self.rownowazne.setGeometry(INPUT_X,INPUT_Y_START-50,100,20)
+        self.rownowazne.setStyleSheet("color: yellow")
+        self.rownowazne.setObjectName("rowne_wagi")
+        self.rownowazne.setText("Równoważne")
+        self.rownowazne.stateChanged.connect(lambda: self.make_even_weights())
         
         self.weights_text = QtWidgets.QLabel(self.centralwidget)
         self.weights_text.setGeometry(INPUT_X+350,INPUT_Y_START,500,41)
@@ -115,10 +87,41 @@ class Ui_TopsisScreen(QtWidgets.QMainWindow):
         TopsisScreen.setWindowTitle(_translate("TopsisScreen", "TopsisScreen"))
         self.tytul_topsis.setText(_translate("TopsisScreen", "<html><head/><body><p align=\"center\"><span style=\" font-size:20pt; font-weight:600; color:#ffffff;\">Metoda Topsis</span></p><p align=\"center\"><br/></p></body></html>"))
         self.info_topsis.setText(_translate("TopsisScreen", "<html><head/><body><p align=\"center\"><span style=\" font-weight:600; color:#ffffff;\">Proszę nadać wagi wybranym kryteriom. Wagi muszą mieć łączną sumę 1!!!.<br/>Można też wybrać opcję, aby kryteria były równoważne.</span></p></body></html>"))
-        self.menu_topsis.setText(_translate("TopsisScreen", "Menu"))
+        self.menu.setText(_translate("TopsisScreen", "Menu"))
+   
+    def make_interface(self):
+        self.inputs = [0 for _ in self.criteria]
+        self.ok_buttons = []
+        self.crits = []
+        self.weights = [0 for _ in self.criteria]
+        self.sum_weights = sum(self.weights)
+        
+        for i,crit in enumerate(sorted(self.criteria)):
+            crit_label = QtWidgets.QLabel(self.centralwidget)
+            crit_label.setGeometry(QtCore.QRect(INPUT_X, INPUT_Y_START+i*50, 140, 41))
+            crit_label.setObjectName(crit)
+            crit_label.setText(f"{crit}:")
+            crit_label.setStyleSheet("color: white;")
+            self.crits.append(crit_label)
+            
+            weight_input = QtWidgets.QLineEdit(self.centralwidget)
+            weight_input.setGeometry(QtCore.QRect(INPUT_X+150,INPUT_Y_START+i*50,100,40))
+            weight_input.setObjectName(f"weight_{crit}")
+            weight_input.setStyleSheet("color: black;")
+            weight_input.setFont(QtGui.QFont("Arial",12))
+            weight_input.setText("")
+            self.inputs[i] = weight_input
+            self.inputs[i].textChanged.connect(lambda _,idx = i: self.inputs[idx].setStyleSheet("background-color: #ffffff;"))
+            
+            ok = QtWidgets.QPushButton(self.centralwidget)
+            ok.setGeometry(QtCore.QRect(INPUT_X+255, INPUT_Y_START+i*50, 30, 30))
+            ok.setObjectName(f"ok_{crit}")
+            ok.setText(f"OK")
+            self.ok_buttons.append(ok)
+            ok.clicked.connect(lambda _,idx = i: self.assign_weight(idx))
     
-    def even_weights(self):
-        if self.even.isChecked():
+    def make_even_weights(self):
+        if self.rownowazne.isChecked():
             weight = 1/(len(self.criteria))
             for i in range(len(self.criteria)):
                 self.inputs[i].setEnabled(False)

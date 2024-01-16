@@ -9,14 +9,16 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from screen import Screen
 
-
-class Ui_RankingScreen(object):
+class Ui_RankingScreen:
     def __init__(self, RankingScreen,gui,method):
         self.gui = gui
         self.method = method
+        self.ranking = []
+        self.show_nr = 10                                # Pokaż tyle aut z czołówki rankingu
         RankingScreen.setObjectName("RankingScreen")
-        RankingScreen.resize(759, 864)
+        RankingScreen.resize(781, 878)
         self.centralwidget = QtWidgets.QWidget(RankingScreen)
         self.centralwidget.setObjectName("centralwidget")
         
@@ -34,16 +36,9 @@ class Ui_RankingScreen(object):
         self.tytul.setObjectName("tytul")
         
         self.menu = QtWidgets.QPushButton(self.centralwidget)
-        self.menu.setGeometry(QtCore.QRect(30, 360, 111, 41))
+        self.menu.setGeometry(QtCore.QRect(20, 360, 111, 41))
         self.menu.setObjectName("menu")
         self.menu.clicked.connect(lambda: self.gui.show_main())
-        
-        self.method_type = QtWidgets.QLabel(self.centralwidget)
-        self.method_type.setGeometry(QtCore.QRect(30, 480, 200, 16))
-        self.method_type.setObjectName("method_type")
-        self.method_type.setFont(QtGui.QFont("Arial",8))
-        self.method_type.setStyleSheet("color: white;")
-        self.method_type.setText(f"Przyszedłem z: {self.method}")
         
         RankingScreen.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(RankingScreen)
@@ -53,6 +48,26 @@ class Ui_RankingScreen(object):
         self.statusbar = QtWidgets.QStatusBar(RankingScreen)
         self.statusbar.setObjectName("statusbar")
         RankingScreen.setStatusBar(self.statusbar)
+        
+        self.method_type = QtWidgets.QLabel(self.centralwidget)
+        self.method_type.setGeometry(QtCore.QRect(30, 480, 200, 16))
+        self.method_type.setObjectName("method_type")
+        self.method_type.setFont(QtGui.QFont("Arial",8))
+        self.method_type.setStyleSheet("color: white;")
+        self.method_type.setText(f"Wynik metody: {self.method.name}")
+        
+        ''' Teraz kod zależny od tego, z jakiego ekranu przychodzimy, czyli którą metodę wybraliśmy
+        Na razie zrobiłem tylko dla topsis, i to nic nie liczy tylko printuje 10 pierwszych rzeczy z tej bazy'''
+        if self.method == Screen.TOPSIS:
+            for _,row in self.gui.database.head(self.show_nr).iterrows():
+                self.ranking.append(row.tolist())
+            self.display_ranking()
+            
+        elif self.method == Screen.RSM:
+            for _,row in self.gui.database.head(self.show_nr).iterrows():
+                self.ranking.append(row.tolist())
+            self.display_ranking()
+        
 
         self.retranslateUi(RankingScreen)
         QtCore.QMetaObject.connectSlotsByName(RankingScreen)
@@ -63,4 +78,10 @@ class Ui_RankingScreen(object):
         self.tytul.setText(_translate("RankingScreen", "<html><head/><body><p align=\"center\"><span style=\" font-size:20pt; font-weight:600; color:#ffffff;\">Ranking</span></p></body></html>"))
         self.menu.setText(_translate("RankingScreen", "Menu"))
     
-
+    def display_ranking(self):
+        self.ranking_list = QtWidgets.QLabel(self.centralwidget)
+        self.ranking_list.setGeometry(250,480,100,200)
+        self.ranking_list.setAlignment(QtCore.Qt.AlignTop | QtCore.Qt.AlignLeft)
+        to_display = "\n".join(" | ".join(map(str, row)) for row in self.ranking)
+        self.ranking_list.setText(to_display)
+        self.ranking_list.setStyleSheet("color: white;")

@@ -8,6 +8,7 @@ from screen import Screen
 from MainWindow import Ui_MainScreen
 from TopsisScreen import Ui_TopsisScreen
 from ranking_screen import Ui_RankingScreen
+from rsm_screen import Ui_RsmScreen
 
 class Gui:
     '''
@@ -24,7 +25,7 @@ class Gui:
         self.stacked_widget = QStackedWidget()
         self.stacked_widget.setFixedHeight(876)
         self.stacked_widget.setFixedWidth(783)
-        self.database = pd.read_excel("test_data_base.xlsx")
+        self.database = pd.read_excel("kod\\gui\\test_data_base.xlsx")
 
     def show_main(self):
         window = QtWidgets.QMainWindow()
@@ -36,6 +37,13 @@ class Gui:
     def show_topsis(self, criteria):
         window = QtWidgets.QMainWindow()
         Ui_TopsisScreen(window, self,criteria)
+        self.stacked_widget.addWidget(window)
+        self.stacked_widget.setCurrentWidget(window)
+        self.stacked_widget.show()
+        
+    def show_rsm(self,criteria):
+        window = QtWidgets.QMainWindow()
+        Ui_RsmScreen(window, self,criteria)
         self.stacked_widget.addWidget(window)
         self.stacked_widget.setCurrentWidget(window)
         self.stacked_widget.show()
