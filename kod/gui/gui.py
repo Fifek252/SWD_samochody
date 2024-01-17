@@ -48,9 +48,9 @@ class Gui:
         self.stacked_widget.setCurrentWidget(window)
         self.stacked_widget.show()
     
-    def show_ranking(self,method : Screen):
+    def show_ranking(self,method : Screen,criteria):
         window = QtWidgets.QMainWindow()
-        Ui_RankingScreen(window,self,method)
+        Ui_RankingScreen(window,self,method,criteria)
         self.stacked_widget.addWidget(window)
         self.stacked_widget.setCurrentWidget(window)
         self.stacked_widget.show()

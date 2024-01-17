@@ -27,6 +27,7 @@ class Ui_RsmScreen(object):
     def __init__(self, RsmScreen,gui,criteria):
         self.criteria = criteria
         self.gui = gui
+        self.trashcan = QtGui.QIcon("kod\\gui\\trashcan.png")
         RsmScreen.setObjectName("RsmScreen")
         RsmScreen.resize(781, 878)
         
@@ -54,6 +55,7 @@ class Ui_RsmScreen(object):
         self.status_quo.setText(STATUS_QUO_TEXT+"\n[]")
         self.status_quo.setStyleSheet("color: white;")
         self.status_quo.setFont(QtGui.QFont("Arial",8))
+        self.status_quo.setAlignment(QtCore.Qt.AlignTop | QtCore.Qt.AlignLeft)
         
         self.aspiracje = QtWidgets.QLabel(self.centralwidget)
         self.aspiracje.setGeometry(QtCore.QRect(INPUT_X + 460, INPUT_Y_START+90, 220, 130))
@@ -61,11 +63,30 @@ class Ui_RsmScreen(object):
         self.aspiracje.setText(ASPIRACJE_TEXT +"\n[]")
         self.aspiracje.setStyleSheet("color: white;")
         self.aspiracje.setFont(QtGui.QFont("Arial",8))
+        self.aspiracje.setAlignment(QtCore.Qt.AlignTop | QtCore.Qt.AlignLeft)
         
         self.menu = QtWidgets.QPushButton(self.centralwidget)
-        self.menu.setGeometry(QtCore.QRect(20, 440, 111, 41))
+        self.menu.setGeometry(QtCore.QRect(20, 400, 111, 41))
         self.menu.setObjectName("menu_rsm")
         self.menu.clicked.connect(lambda: self.gui.show_main())
+        
+        self.type_info = QtWidgets.QLabel(self.centralwidget)
+        self.type_info.setGeometry(INPUT_X+70,INPUT_Y_START-75,140,20)
+        self.type_info.setText("Utwórz punkt:")
+        self.type_info.setStyleSheet("color: white;")
+        self.type_info.setFont(QtGui.QFont("Arial",8))
+        
+        self.clear_asp = QtWidgets.QPushButton(self.centralwidget)
+        self.clear_asp.setGeometry(QtCore.QRect(INPUT_X+420,INPUT_Y_START+90,30,30))
+        self.clear_asp.setIcon(self.trashcan)
+        self.clear_asp.setIconSize(self.trashcan.actualSize(0.8*self.clear_asp.size()))
+        self.clear_asp.clicked.connect(lambda: self.clear_asp_points())
+        
+        self.clear_quo = QtWidgets.QPushButton(self.centralwidget)
+        self.clear_quo.setGeometry(QtCore.QRect(INPUT_X+420,INPUT_Y_START-50,30,30))
+        self.clear_quo.setIcon(self.trashcan)
+        self.clear_quo.setIconSize(self.trashcan.actualSize(0.8*self.clear_quo.size()))
+        self.clear_quo.clicked.connect(lambda: self.clear_quo_points())
         
         RsmScreen.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(RsmScreen)
@@ -140,7 +161,7 @@ class Ui_RsmScreen(object):
         self.enter = QtWidgets.QPushButton(self.centralwidget)
         self.enter.setGeometry(QtCore.QRect(INPUT_X+70,INPUT_Y_START+self.enter_idx*50-30,101,28))
         self.enter.setObjectName("enter")
-        self.enter.setText("Utwórz")
+        self.enter.setText("Wprowadż")
         self.enter.clicked.connect(lambda: self.create_point())
 
     def switch_aspiration(self):
@@ -241,8 +262,14 @@ class Ui_RsmScreen(object):
 
     def go_to_ranking(self):
         if len(self.asp_points) >= 1 and len(self.quo_points) >= 1:
-            self.gui.show_ranking(Screen.RSM)
+            self.gui.show_ranking(Screen.RSM,self.criteria)
         else:
             self.error_zero_points()
     
-    
+    def clear_asp_points(self):
+        self.asp_points.clear()
+        self.aspiracje.setText(ASPIRACJE_TEXT +"\n[]")
+        
+    def clear_quo_points(self):
+        self.quo_points.clear()
+        self.status_quo.setText(STATUS_QUO_TEXT +"\n[]")

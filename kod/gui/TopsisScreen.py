@@ -173,7 +173,7 @@ class Ui_TopsisScreen:
 
     def go_to_ranking(self):
         if self.sum_weights == 1 and 0 not in self.weights:
-            self.gui.show_ranking(Screen.TOPSIS)
+            self.gui.show_ranking(Screen.TOPSIS,self.criteria)
         elif self.sum_weights != 1:
             self.error_sum("Suma wag kryteriów musi wynosić 1,\naby można było zastosować metodę topsis")
         elif 0 in self.weights:

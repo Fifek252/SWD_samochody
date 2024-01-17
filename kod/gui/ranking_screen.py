@@ -12,11 +12,13 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from screen import Screen
 
 class Ui_RankingScreen:
-    def __init__(self, RankingScreen,gui,method):
+    def __init__(self, RankingScreen,gui,method,criteria):
         self.gui = gui
         self.method = method
+        self.criteria = criteria
         self.ranking = []
-        self.show_nr = 10                                # Pokaż tyle aut z czołówki rankingu
+        self.show_nr = 10                   # Pokaż tyle aut z czołówki rankingu
+        
         RankingScreen.setObjectName("RankingScreen")
         RankingScreen.resize(781, 878)
         self.centralwidget = QtWidgets.QWidget(RankingScreen)
@@ -36,7 +38,7 @@ class Ui_RankingScreen:
         self.tytul.setObjectName("tytul")
         
         self.menu = QtWidgets.QPushButton(self.centralwidget)
-        self.menu.setGeometry(QtCore.QRect(20, 360, 111, 41))
+        self.menu.setGeometry(QtCore.QRect(20, 317, 111, 41))
         self.menu.setObjectName("menu")
         self.menu.clicked.connect(lambda: self.gui.show_main())
         
@@ -55,6 +57,12 @@ class Ui_RankingScreen:
         self.method_type.setFont(QtGui.QFont("Arial",8))
         self.method_type.setStyleSheet("color: white;")
         self.method_type.setText(f"Wynik metody: {self.method.name}")
+        
+        self.return_btn = QtWidgets.QPushButton(self.centralwidget)
+        self.return_btn.setGeometry(QtCore.QRect(20, 360, 111, 41))
+        self.return_btn.setObjectName("return_btn")
+        self.return_btn.setText("Powrót")
+        self.return_btn.clicked.connect(lambda: self.back_to_method())
         
         ''' Teraz kod zależny od tego, z jakiego ekranu przychodzimy, czyli którą metodę wybraliśmy
         Na razie zrobiłem tylko dla topsis, i to nic nie liczy tylko printuje 10 pierwszych rzeczy z tej bazy'''
@@ -85,3 +93,9 @@ class Ui_RankingScreen:
         to_display = "\n".join(" | ".join(map(str, row)) for row in self.ranking)
         self.ranking_list.setText(to_display)
         self.ranking_list.setStyleSheet("color: white;")
+        
+    def back_to_method(self):
+        if self.method == Screen.TOPSIS:
+            self.gui.show_topsis(self.criteria)
+        elif self.method == Screen.RSM:
+            self.gui.show_rsm(self.criteria)
