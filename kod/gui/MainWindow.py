@@ -11,93 +11,99 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
 
-from screen import Screen
-
-class Ui_MainScreen(QtWidgets.QMainWindow):
+class Ui_MainScreen:
     def __init__(self, MainScreen,gui):
-        super().__init__()
         self.gui = gui
         self.checked_boxes = [] 
              
         # rzeczy wygenerowane przez Designer
         MainScreen.setObjectName("MainScreen")
-        MainScreen.resize(783, 876)
-
+        MainScreen.resize(781, 878)
+        
         self.centralwidget = QtWidgets.QWidget(MainScreen)
         self.centralwidget.setObjectName("centralwidget")
-
+        
         self.background = QtWidgets.QLabel(self.centralwidget)
-        self.background.setGeometry(QtCore.QRect(0, 0, 801, 821))
+        self.background.setGeometry(QtCore.QRect(0, 0, 801, 881))
         self.background.setText("")
         self.background.setPixmap(QtGui.QPixmap("kod\\gui\\background.jpg"))
         self.background.setScaledContents(True)
         self.background.setObjectName("background")
-
+        
         self.rsm = QtWidgets.QPushButton(self.centralwidget)
         self.rsm.setGeometry(QtCore.QRect(662, 630, 101, 28))
         self.rsm.setObjectName("rsm")
-
+        self.rsm.clicked.connect(lambda: self.gotoRsm())
+        
         self.tytul = QtWidgets.QLabel(self.centralwidget)
         self.tytul.setGeometry(QtCore.QRect(190, 450, 421, 61))
         self.tytul.setStyleSheet("border-color: rgb(159, 255, 124);")
-        self.tytul.setFrameShape(QtWidgets.QFrame.Box)
         self.tytul.setObjectName("tytul")
-
+        
         self.topsis = QtWidgets.QPushButton(self.centralwidget)
         self.topsis.setGeometry(QtCore.QRect(662, 590, 101, 28))
         self.topsis.setObjectName("topsis")
-        self.topsis.clicked.connect(self.go_to_topsis)
-
+        self.topsis.clicked.connect(lambda: self.gotoTopsis())
+        
         self.moc = QtWidgets.QCheckBox(self.centralwidget) 
-        self.moc.setGeometry(QtCore.QRect(20, 690, 111, 20))
+        self.moc.setGeometry(QtCore.QRect(20, 730, 111, 20))
         self.moc.setStyleSheet("color: rgb(255, 255, 255);")
         self.moc.setObjectName("moc")
         self.moc.stateChanged.connect(lambda: self.update_checked_boxes(self.moc))   
-
+        
         self.max_predk = QtWidgets.QCheckBox(self.centralwidget)
         self.max_predk.setGeometry(QtCore.QRect(20, 650, 171, 20))
         self.max_predk.setStyleSheet("color: rgb(255, 255, 255);")
         self.max_predk.setObjectName("max_predk")
         self.max_predk.stateChanged.connect(lambda: self.update_checked_boxes(self.max_predk))
-
+        
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(20, 560, 201, 41))
         self.label.setObjectName("label")
-
+        
         self.pojemnosc = QtWidgets.QCheckBox(self.centralwidget)
         self.pojemnosc.setGeometry(QtCore.QRect(20, 770, 141, 20))
         self.pojemnosc.setStyleSheet("color: rgb(255, 255, 255);")
         self.pojemnosc.setObjectName("pojemnosc")
         self.pojemnosc.stateChanged.connect(lambda: self.update_checked_boxes(self.pojemnosc))
-
+        
         self.masa = QtWidgets.QCheckBox(self.centralwidget)
-        self.masa.setGeometry(QtCore.QRect(20, 730, 81, 20))
+        self.masa.setGeometry(QtCore.QRect(20, 690, 81, 20))
         self.masa.setStyleSheet("color: rgb(255, 255, 255);")
         self.masa.setObjectName("masa")
         self.masa.stateChanged.connect(lambda: self.update_checked_boxes(self.masa))
-
+        
         self.uta = QtWidgets.QPushButton(self.centralwidget)
         self.uta.setGeometry(QtCore.QRect(662, 670, 101, 28))
         self.uta.setObjectName("uta")
-
+        
         self.pokaz_baze = QtWidgets.QPushButton(self.centralwidget)
-        self.pokaz_baze.setGeometry(QtCore.QRect(310, 760, 151, 28))
+        self.pokaz_baze.setGeometry(QtCore.QRect(310, 800, 151, 28))
         self.pokaz_baze.setObjectName("pokaz_baze")
-
+        self.pokaz_baze.clicked.connect(lambda: print(self.gui.database))
+        
         self.przebieg = QtWidgets.QCheckBox(self.centralwidget)
-        self.przebieg.setGeometry(QtCore.QRect(20, 610, 81, 20))
+        self.przebieg.setGeometry(QtCore.QRect(20, 810, 81, 20))
         self.przebieg.setStyleSheet("color: rgb(255, 255, 255);")
         self.przebieg.setObjectName("przebieg")
         self.przebieg.stateChanged.connect(lambda: self.update_checked_boxes(self.przebieg))
-
+        
         self.label_3 = QtWidgets.QLabel(self.centralwidget)
         self.label_3.setGeometry(QtCore.QRect(530, 560, 241, 20))
         self.label_3.setObjectName("label_3")
-
+        
         self.safety_pr = QtWidgets.QPushButton(self.centralwidget)
         self.safety_pr.setGeometry(QtCore.QRect(660, 710, 101, 28))
         self.safety_pr.setObjectName("safety_pr")
+        
+        self.wszystkie = QtWidgets.QCheckBox(self.centralwidget)
+        self.wszystkie.setGeometry(QtCore.QRect(20, 610, 200, 20))
+        self.wszystkie.setObjectName("wszystkie")
+        self.wszystkie.setStyleSheet("color: yellow;")
+        self.wszystkie.setText("Zaznacz wszystkie")
+        self.wszystkie.clicked.connect(lambda: self.select_all())
 
+        
         MainScreen.setCentralWidget(self.centralwidget)
 
         self.menubar = QtWidgets.QMenuBar(MainScreen)
@@ -132,7 +138,7 @@ class Ui_MainScreen(QtWidgets.QMainWindow):
         self.safety_pr.setText(_translate("MainScreen", "Safety principle"))
 
     def update_checked_boxes(self,checkbox):
-        if checkbox.isChecked and checkbox.text() not in self.checked_boxes:
+        if checkbox.isChecked() and checkbox.text() not in self.checked_boxes:
             self.checked_boxes.append(checkbox.text())
         else:
             self.checked_boxes.remove(checkbox.text())
@@ -145,25 +151,27 @@ class Ui_MainScreen(QtWidgets.QMainWindow):
             msg.exec_()
             return False
         return True
-    
-    def go_to_topsis(self):
+     
+    def select_all(self):
+        if self.wszystkie.isChecked():
+            self.max_predk.setChecked(True)
+            self.masa.setChecked(True)
+            self.moc.setChecked(True)
+            self.pojemnosc.setChecked(True)
+            self.przebieg.setChecked(True)
+        else:
+            self.max_predk.setChecked(False)
+            self.masa.setChecked(False)
+            self.moc.setChecked(False)
+            self.pojemnosc.setChecked(False)
+            self.przebieg.setChecked(False)
+         
+    def gotoTopsis(self):
         flag = self.enough_checked()
         if flag:
-            self.gui.show_screen(Screen.TOPSIS)
-    
-    
+            self.gui.show_topsis(self.checked_boxes)        
 
-# if __name__ == "__main__":
-#     import sys
-#     app = QtWidgets.QApplication(sys.argv)
-#     widget = QStackedWidget()
-#     widget.setFixedHeight(876)
-#     widget.setFixedWidth(783)
-
-#     MainScreen = QtWidgets.QMainWindow()
-#     widget.addWidget(MainScreen)
-#     ui = Ui_MainScreen()
-#     ui.setupUi(MainScreen)
-#     widget.show()
-
-#     sys.exit(app.exec_())
+    def gotoRsm(self):
+        flag = self.enough_checked()
+        if flag:
+            self.gui.show_rsm(self.checked_boxes)

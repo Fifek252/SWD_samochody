@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>762</width>
-    <height>868</height>
+    <height>860</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,9 +17,9 @@
    <property name="geometry">
     <rect>
      <x>-30</x>
-     <y>10</y>
-     <width>761</width>
-     <height>851</height>
+     <y>0</y>
+     <width>791</width>
+     <height>861</height>
     </rect>
    </property>
    <property name="text">
@@ -35,8 +35,8 @@
   <widget class="QLabel" name="tytul">
    <property name="geometry">
     <rect>
-     <x>190</x>
-     <y>470</y>
+     <x>180</x>
+     <y>490</y>
      <width>421</width>
      <height>61</height>
     </rect>
@@ -75,6 +75,29 @@
    </property>
    <property name="text">
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ffffff;&quot;&gt;Podaj zbiór punktów aspiracji:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="menu_rsm">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>440</y>
+     <width>111</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Menu</string>
+   </property>
+  </widget>
+  <widget class="QListWidget" name="listWidget">
+   <property name="geometry">
+    <rect>
+     <x>240</x>
+     <y>580</y>
+     <width>311</width>
+     <height>51</height>
+    </rect>
    </property>
   </widget>
  </widget>
