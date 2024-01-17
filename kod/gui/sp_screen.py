@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# RsmScreen implementation generated from reading ui file 'rsm_screen.ui'
+# SpScreen implementation generated from reading ui file 'rsm_screen.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
 #
@@ -23,15 +23,15 @@ class Point:
     def get_point(self):
         return self.point
 
-class Ui_RsmScreen:
-    def __init__(self, RsmScreen,gui,criteria):
+class Ui_SpScreen:
+    def __init__(self, SpScreen,gui,criteria):
         self.criteria = criteria
         self.gui = gui
         self.trashcan = QtGui.QIcon("kod\\gui\\trashcan.png")
-        RsmScreen.setObjectName("RsmScreen")
-        RsmScreen.resize(781, 878)
+        SpScreen.setObjectName("SpScreen")
+        SpScreen.resize(781, 878)
         
-        self.centralwidget = QtWidgets.QWidget(RsmScreen)
+        self.centralwidget = QtWidgets.QWidget(SpScreen)
         self.centralwidget.setObjectName("centralwidget")
         
         self.background = QtWidgets.QLabel(self.centralwidget)
@@ -88,24 +88,24 @@ class Ui_RsmScreen:
         self.clear_quo.setIconSize(self.trashcan.actualSize(0.8*self.clear_quo.size()))
         self.clear_quo.clicked.connect(lambda: self.clear_quo_points())
         
-        RsmScreen.setCentralWidget(self.centralwidget)
-        self.menubar = QtWidgets.QMenuBar(RsmScreen)
+        SpScreen.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(SpScreen)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 783, 26))
         self.menubar.setObjectName("menubar")
-        RsmScreen.setMenuBar(self.menubar)
-        self.statusbar = QtWidgets.QStatusBar(RsmScreen)
+        SpScreen.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar(SpScreen)
         self.statusbar.setObjectName("statusbar")
-        RsmScreen.setStatusBar(self.statusbar)
+        SpScreen.setStatusBar(self.statusbar)
 
-        self.retranslateUi(RsmScreen)
-        QtCore.QMetaObject.connectSlotsByName(RsmScreen)
+        self.retranslateUi(SpScreen)
+        QtCore.QMetaObject.connectSlotsByName(SpScreen)
 
-    def retranslateUi(self, RsmScreen):
+    def retranslateUi(self, SpScreen):
         _translate = QtCore.QCoreApplication.translate
-        RsmScreen.setWindowTitle(_translate("RsmScreen", "RsmScreen"))
-        self.tytul.setText(_translate("RsmScreen", "<html><head/><body><p align=\"center\"><span style=\" font-size:20pt; font-weight:600; color:#ffffff;\">Metoda RSM</span></p><p align=\"center\"><br/></p></body></html>"))
+        SpScreen.setWindowTitle(_translate("SpScreen", "SpScreen"))
+        self.tytul.setText(_translate("SpScreen", "<html><head/><body><p align=\"center\"><span style=\" font-size:20pt; font-weight:600; color:#ffffff;\">Metoda Safety Principle</span></p><p align=\"center\"><br/></p></body></html>"))
 
-        self.menu.setText(_translate("RsmScreen", "Menu"))
+        self.menu.setText(_translate("SpScreen", "Menu"))
         
     def make_interface(self):
         self.quo_list = [0 for _ in self.criteria]
@@ -259,13 +259,7 @@ class Ui_RsmScreen:
         msg.setText("Proszę utworzyć przynajmniej 1 punkt aspiracji i status-quo")
         msg.setIcon(QtWidgets.QMessageBox.Critical)
         msg.exec_()
-
-    def go_to_ranking(self):
-        if len(self.asp_points) >= 1 and len(self.quo_points) >= 1:
-            self.gui.show_ranking(Screen.RSM,self.criteria)
-        else:
-            self.error_zero_points()
-    
+        
     def clear_asp_points(self):
         self.asp_points.clear()
         self.aspiracje.setText(ASPIRACJE_TEXT +"\n[]")
@@ -273,3 +267,10 @@ class Ui_RsmScreen:
     def clear_quo_points(self):
         self.quo_points.clear()
         self.status_quo.setText(STATUS_QUO_TEXT +"\n[]")
+
+    def go_to_ranking(self):
+        if len(self.asp_points) >= 1 and len(self.quo_points) >= 1:
+            self.gui.show_ranking(Screen.SP,self.criteria)
+        else:
+            self.error_zero_points()
+    

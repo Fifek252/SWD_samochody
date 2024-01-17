@@ -9,6 +9,8 @@ from MainWindow import Ui_MainScreen
 from TopsisScreen import Ui_TopsisScreen
 from ranking_screen import Ui_RankingScreen
 from rsm_screen import Ui_RsmScreen
+from sp_screen import Ui_SpScreen
+from uta_screen import Ui_UtaScreen
 
 class Gui:
     '''
@@ -44,6 +46,20 @@ class Gui:
     def show_rsm(self,criteria):
         window = QtWidgets.QMainWindow()
         Ui_RsmScreen(window, self,criteria)
+        self.stacked_widget.addWidget(window)
+        self.stacked_widget.setCurrentWidget(window)
+        self.stacked_widget.show()
+    
+    def show_sp(self,criteria):
+        window = QtWidgets.QMainWindow()
+        Ui_SpScreen(window, self,criteria)
+        self.stacked_widget.addWidget(window)
+        self.stacked_widget.setCurrentWidget(window)
+        self.stacked_widget.show()
+    
+    def show_uta(self,criteria):
+        window = QtWidgets.QMainWindow()
+        Ui_UtaScreen(window, self,criteria)
         self.stacked_widget.addWidget(window)
         self.stacked_widget.setCurrentWidget(window)
         self.stacked_widget.show()

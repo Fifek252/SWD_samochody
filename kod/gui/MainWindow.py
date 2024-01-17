@@ -76,6 +76,7 @@ class Ui_MainScreen:
         self.uta = QtWidgets.QPushButton(self.centralwidget)
         self.uta.setGeometry(QtCore.QRect(662, 670, 101, 28))
         self.uta.setObjectName("uta")
+        self.uta.clicked.connect(lambda: self.gotoUta())
         
         self.pokaz_baze = QtWidgets.QPushButton(self.centralwidget)
         self.pokaz_baze.setGeometry(QtCore.QRect(310, 800, 151, 28))
@@ -95,6 +96,7 @@ class Ui_MainScreen:
         self.safety_pr = QtWidgets.QPushButton(self.centralwidget)
         self.safety_pr.setGeometry(QtCore.QRect(660, 710, 101, 28))
         self.safety_pr.setObjectName("safety_pr")
+        self.safety_pr.clicked.connect(lambda: self.gotoSp())
         
         self.wszystkie = QtWidgets.QCheckBox(self.centralwidget)
         self.wszystkie.setGeometry(QtCore.QRect(20, 610, 200, 20))
@@ -171,3 +173,13 @@ class Ui_MainScreen:
         flag = self.enough_checked()
         if flag:
             self.gui.show_rsm(self.checked_boxes)
+        
+    def gotoSp(self):
+        flag = self.enough_checked()
+        if flag:
+            self.gui.show_sp(self.checked_boxes)
+            
+    def gotoUta(self):
+        flag = self.enough_checked()
+        if flag:
+            self.gui.show_uta(self.checked_boxes)

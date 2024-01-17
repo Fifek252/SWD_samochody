@@ -111,7 +111,7 @@ class Ui_TopsisScreen:
             weight_input.setFont(QtGui.QFont("Arial",12))
             weight_input.setText("")
             self.inputs[i] = weight_input
-            self.inputs[i].textChanged.connect(lambda _,idx = i: self.inputs[idx].setStyleSheet("background-color: #ffffff;"))
+            self.inputs[i].textChanged.connect(lambda _,idx = i: self.validate_input_edit(idx))
             
             ok = QtWidgets.QPushButton(self.centralwidget)
             ok.setGeometry(QtCore.QRect(INPUT_X+255, INPUT_Y_START+i*50, 30, 30))
@@ -119,6 +119,22 @@ class Ui_TopsisScreen:
             ok.setText(f"OK")
             self.ok_buttons.append(ok)
             ok.clicked.connect(lambda _,idx = i: self.assign_weight(idx))
+    
+    
+    def validate_input_edit(self,idx):
+        text = self.inputs[idx].text()
+        try:
+            number = float(text)
+            if not(number > 0 and number < 1):
+                raise ValueError
+            self.inputs[idx].setStyleSheet("background-color: #00ff00;")
+            return number
+        except ValueError:
+            if len(text) == 0:
+                self.inputs[idx].setStyleSheet("background-color: #ffffff;")
+            else:
+                self.inputs[idx].setStyleSheet("background-color: #ff0000;")
+            return None
     
     def make_even_weights(self):
         if self.rownowazne.isChecked():

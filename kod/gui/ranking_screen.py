@@ -76,6 +76,16 @@ class Ui_RankingScreen:
                 self.ranking.append(row.tolist())
             self.display_ranking()
         
+        elif self.method == Screen.SP:
+            for _,row in self.gui.database.head(self.show_nr).iterrows():
+                self.ranking.append(row.tolist())
+            self.display_ranking()
+        
+        elif self.method == Screen.UTA:
+            for _,row in self.gui.database.head(self.show_nr).iterrows():
+                self.ranking.append(row.tolist())
+            self.display_ranking()
+        
 
         self.retranslateUi(RankingScreen)
         QtCore.QMetaObject.connectSlotsByName(RankingScreen)
@@ -99,3 +109,7 @@ class Ui_RankingScreen:
             self.gui.show_topsis(self.criteria)
         elif self.method == Screen.RSM:
             self.gui.show_rsm(self.criteria)
+        elif self.method == Screen.SP:
+            self.gui.show_sp(self.criteria)
+        elif self.method == Screen.UTA:
+            self.gui.show_uta(self.criteria)
