@@ -159,7 +159,7 @@ class Ui_TopsisScreen:
         x = self.inputs[idx].text()
         x = self.validate_weight(idx,x)
         if x is not None:
-            self.inputs[idx].setStyleSheet("background-color: #00ff00;")
+            self.inputs[idx].setStyleSheet("background-color: #4C9900;")
             self.weights[idx] = x
             self.sum_weights = round(sum(self.weights),3)
             self.weights_text.setText(f"Wagi: {self.weights}\nSuma wag: {self.sum_weights}")

@@ -8,6 +8,7 @@ class Ui_UtaScreen:
     def __init__(self, UtaScreen,gui,criteria):
         self.gui = gui
         self.criteria = criteria
+        self.trashcan = QtGui.QIcon("kod\\gui\\trashcan.png")
 
         self.centralwidget = QtWidgets.QWidget(UtaScreen)
         self.centralwidget.setObjectName("centralwidget")
@@ -152,13 +153,14 @@ class Ui_UtaScreen:
             self.usefulness_fcn.append(usefulness_column)      
         
         self.search = QtWidgets.QPushButton(self.centralwidget)
-        self.search.setGeometry(QtCore.QRect(INPUT_X + 300,INPUT_Y_START-40,151,28))
+        self.search.setGeometry(QtCore.QRect(INPUT_X + 300,INPUT_Y_START-40,155,28))
         self.search.setText("Szukaj")
         font = QtGui.QFont("Arial",10)
         font.setBold(True)
         self.search.setFont(font)
         self.search.clicked.connect(lambda: self.go_to_ranking())
         self.search.show()
+        
   
     def error_ranges(self):
         msg = QtWidgets.QMessageBox()
@@ -177,8 +179,8 @@ class Ui_UtaScreen:
         msg.setText("Proszę w każde okienko wpisać liczbę dodatnią.")
         msg.setIcon(QtWidgets.QMessageBox.Critical)
         msg.exec_()
-                    
-    
+        
+
     def go_to_ranking(self):
         self.final_usefulness = []
         for lst in self.usefulness_fcn:
@@ -203,3 +205,4 @@ class Ui_UtaScreen:
             self.error_first_row_sum()
             return
         
+    
