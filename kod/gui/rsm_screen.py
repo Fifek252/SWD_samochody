@@ -12,8 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from screen import Screen
 
 INPUT_X = 30
-INPUT_Y_START = 550
-ASPIRACJE_TEXT = "Aktualny zbiór punktów aspiracji: "
+INPUT_Y_START = ASPIRACJE_TEXT = "Aktualny zbiór punktów aspiracji: "
 STATUS_QUO_TEXT = "Aktualny zbiór punktów status-quo: "
 MAX_POINTS = 5
 
@@ -243,7 +242,7 @@ class Ui_RsmScreen:
             point = Point(self.quo_list)
             self.quo_points.append(point.get_point())
             self.quo_list = [0 for _ in self.criteria]
-            self.status_quo.setText(ASPIRACJE_TEXT + '\n'+ '\n'.join(map(str,self.quo_points)))
+            self.status_quo.setText(STATUS_QUO_TEXT + '\n'+ '\n'.join(map(str,self.quo_points)))
             for text_edit in self.inputs:
                 text_edit.setStyleSheet("background-color: #ffffff;")
                 text_edit.clear()

@@ -137,17 +137,17 @@ class Ui_UtaScreen:
   
     def spawn_columns(self):
         self.usefulness_fcn = []
-        for column, nr_of_rows in enumerate(self.set_ranges_lst):
+        for row, nr_of_cols in enumerate(self.set_ranges_lst):
             usefulness_column = []
-            for row in range(nr_of_rows):
+            for col in range(nr_of_cols):
                 print()
                 input = QtWidgets.QLineEdit(self.centralwidget)
-                input.setGeometry(QtCore.QRect(INPUT_X + 300 + column*90,INPUT_Y_START+row*50 ,80,40))
-                input.setObjectName(f"input_{column}{row}")
+                input.setGeometry(QtCore.QRect(INPUT_X + 300 + col*90,INPUT_Y_START+row*50 ,80,40))
+                input.setObjectName(f"input_{row}{col}")
                 input.setStyleSheet("color: white;")
                 input.setFont(QtGui.QFont("Arial",12))
                 input.setText("")
-                input.textChanged.connect(lambda _,col = column,r = row: self.validate_usefulness_edit(col,r))
+                input.textChanged.connect(lambda _,colmn = col,r = row: self.validate_usefulness_edit(colmn,r))
                 input.show()
                 usefulness_column.append(input)
             self.usefulness_fcn.append(usefulness_column)      
