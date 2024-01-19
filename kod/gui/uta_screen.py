@@ -104,21 +104,21 @@ class Ui_UtaScreen:
                 self.ranges[idx].setStyleSheet("background-color: #ff0000;")
             return None
     
-    def validate_usefulness_edit(self,col,r):
-        text = self.usefulness_fcn[col][r].text()
+    def validate_usefulness_edit(self,r,col):
+        text = self.usefulness_fcn[r][col].text()
         try:
             number = float(text)
             if not (number > 0):
                 raise ValueError
-            if r == 0 and not (number > 0 and number < 1):
+            if col == 0 and not (number > 0 and number < 1):
                 raise ValueError
-            self.usefulness_fcn[col][r].setStyleSheet("background-color: #00ff00;")
+            self.usefulness_fcn[r][col].setStyleSheet("background-color: #00ff00;")
             
         except ValueError:
             if len(text) == 0:
-                self.usefulness_fcn[col][r].setStyleSheet("background-color: #ffffff;")
+                self.usefulness_fcn[r][col].setStyleSheet("background-color: #ffffff;")
             else:
-                self.usefulness_fcn[col][r].setStyleSheet("background-color: #ff0000;")
+                self.usefulness_fcn[r][col].setStyleSheet("background-color: #ff0000;")
             return None
     
     def set_ranges(self):
@@ -127,30 +127,31 @@ class Ui_UtaScreen:
             text = inp.text()
             try:
                 input = int(text)
-                self.set_ranges_lst[idx] = input
+                if input > 4:
+                    input = 4
+                self.set_ranges_lst[idx] = input + 1
             except:
                 if flag is True:
                     self.error_ranges()
                     flag = False
                 return 
-        self.spawn_columns()
+        self._spawn_columns()
   
-    def spawn_columns(self):
+    def _spawn_columns(self):
         self.usefulness_fcn = []
         for row, nr_of_cols in enumerate(self.set_ranges_lst):
             usefulness_column = []
             for col in range(nr_of_cols):
-                print()
                 input = QtWidgets.QLineEdit(self.centralwidget)
                 input.setGeometry(QtCore.QRect(INPUT_X + 300 + col*90,INPUT_Y_START+row*50 ,80,40))
                 input.setObjectName(f"input_{row}{col}")
-                input.setStyleSheet("color: white;")
                 input.setFont(QtGui.QFont("Arial",12))
                 input.setText("")
-                input.textChanged.connect(lambda _,colmn = col,r = row: self.validate_usefulness_edit(colmn,r))
+                input.textChanged.connect(lambda _,colmn = col,r = row: self.validate_usefulness_edit(r,colmn))
                 input.show()
                 usefulness_column.append(input)
             self.usefulness_fcn.append(usefulness_column)      
+
         
         self.search = QtWidgets.QPushButton(self.centralwidget)
         self.search.setGeometry(QtCore.QRect(INPUT_X + 300,INPUT_Y_START-40,155,28))
@@ -201,7 +202,6 @@ class Ui_UtaScreen:
         if first_row_sum == 1:
             self.gui.show_ranking(Screen.UTA,self.criteria)
         else:
-            print(first_row_sum)
             self.error_first_row_sum()
             return
         
