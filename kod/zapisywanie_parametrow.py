@@ -1,31 +1,28 @@
 class Variant:
-    def __init__(self):
-        self.__minimalize = []               # przechowuje informacje czy minimalizować dane kryterium
-        self.__criteria = []
-        self.params = []                # lista zmodyfikowanych kryteriów (w zaleznosci od min/max)
+    def __init__(self, parameters: dict[list[float]], minimalize: list[bool]):
+        self.params = []
+
+        self.minimalize = minimalize
+        self.parameters = parameters   # pelna lista z parametrami
 
 
-    def update_parameters(self, parameters: dict[list[float]], minimalize: list[bool], criteria: list[bool]):
-        self.__criteria = criteria
-        self.__minimalize = minimalize
-
-
-        for samochod in parameters.values():  #iteracja po listach parametrow samochodu
-
+    def update_parameters(self, criteria: list[bool]):
+        self.params = []  # resetuj parametry
+        for samochod in self.parameters.values():  #iteracja po listach parametrow samochodu
             nowe_kryteria = []  #wyznacz nowe kryteria (min/max/None)
+
             for index_kryterium, kryterium in enumerate(samochod):
                 if criteria[index_kryterium]:
-                    if minimalize[index_kryterium]:
+                    if self.minimalize[index_kryterium]:
                         nowe_kryteria.append(kryterium)
                     else:
                         nowe_kryteria.append(-kryterium)
-                else:
-                    nowe_kryteria.append(None)
 
             self.params.append(nowe_kryteria)
 
+
     def get_parameters(self):
-        return [self.params, self.__criteria, self.__minimalize]
+        return self.params
 
 zbior_decyzji = {0: [4, 4, 5],
                      1: [5, 4, -3],
@@ -43,7 +40,7 @@ zbior_decyzji = {0: [4, 4, 5],
                     13: [-1, 3, 4]}
 min = [True, True, False]
 criteria = [True, True, True]
-test_class = Variant()
-test_class.update_parameters(zbior_decyzji, min, criteria)
+test_class = Variant(zbior_decyzji, min)
+test_class.update_parameters(criteria)
 
 print(test_class.params)
