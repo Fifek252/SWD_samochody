@@ -4,64 +4,21 @@ import math
 class MetodaTopsis:
 
     def __init__(self):
-        # self.zbior_decyzji = {1: [4, 4],
-        #                  2: [5, 4],
-        #                  3: [-2, 0],
-        #                  4: [0, 1],
-        #                  5: [2, 1],
-        #                  6: [1, -3],
-        #                 7: [4, 1],
-        #                 8: [3, 2],
-        #                 9: [3, 3],
-        #                 10: [3, -1],
-        #                 11: [-1, 1],
-        #                 12: [0, -1],
-        #                 13: [4, -2],
-        #                 14: [-1, 3]}
-        self.zbior_decyzji = {0: [4, 4, 5],
-                             1: [5, 4, -3],
-                             2: [-2, 0, -2],
-                             3: [0, 1, 5],
-                             4: [2, 1, 6],
-                             5: [1, -3, 1],
-                             6: [4, 1, 2],
-                            7: [3, 2, 3],
-                            8: [3, 3, 5],
-                            9: [3, -1, 6],
-                            10: [-1, 1, 3],
-                            11: [0, -1, 5],
-                            12: [4, -2, 2],
-                            13: [-1, 3, 4]}
-
-        self.waga_kryterium = []
-        # tymczasowe rozwiazanie mozliwe do modyfikacji w przyszlosci
-        for i in range(len(self.zbior_decyzji[0])):
-            self.waga_kryterium.append(1)
-
-        # ta opcja pozwala na wybor, czy dane kryterium ma byc maksymalizowane, czy minimalizowane
-        # TODO: upewnic sie czy implementacja jest prawidlowa, na razie algorytm jest dostosowany
-        # do znajdywania minimum, jezeli chcemy maksymalizowac kryterium, kolumna jest mnozona przez -1
-        self.choose_min_max = []
-        for i in range(len(self.zbior_decyzji[0])):
-            self.choose_min_max.append(1)
-
+        self.zbior_decyzji = {}
         self.zbior_decyzjiZnormalizowany = {}
         self.zbiorniezdominowanyZnormalizowany = {}
         self.wspolczynniki_skorigowane = []
         self.zbior_niezdominowany = {}
 
-        self.punkt_idealnyZnormalizowany = [0, 0]
-        self.punkt_antyidealnyZnormalizowany = [0, 0]
+        self.punkt_idealnyZnormalizowany = []
+        self.punkt_antyidealnyZnormalizowany = []
 
-        self.zbior_rozwiazan = []
+        self.zbior_rozwiazan = []   # indeksy rozwiazan od najlepszego do najgorszego
 
 
-    # modyfikuje tabele w zaleznosci, czy kryterium jest maksymalizowane, czy minimalizowane
-    def okresl_kryterium_min_max(self):
-        for index_punktu, punkt in self.zbior_decyzji.items():
-            for index_kryterium, kryterium in enumerate(punkt):
-                if self.choose_min_max[index_kryterium] == -1:
-                    self.zbior_decyzji[index_punktu][index_kryterium] = punkt[index_kryterium] * -1
+
+    def upload_parameters(self, parameters):
+        self.zbior_decyzji = parameters
 
 
     # Algorytm z filtracja
@@ -129,28 +86,25 @@ class MetodaTopsis:
     def utworzRankingRozwiazan(self):
         sorted_list = sorted(self.wspolczynniki_skorigowane, key=lambda x: x[1])
 
-        # kolumny z kryterium maksymalizujacym sa na poczatku dzialania algorytmu mnozone
-        # przez -1, aby wynik byl prawidlowy, nalezy z powrotem odwrucic
-        self.okresl_kryterium_min_max()
         for result in sorted_list:
-            print("najlepszy punkt: ", self.zbior_decyzji[result[0]])
+            print("najlepszy punkt, id: ", result[0], 'kryteria: ', self.zbior_decyzji[result[0]])
 
 
     def wyznaczWspolczynnikSkorigowany(self):
         # dla wszystkich punktow niezdominowanych wyznacz wspolczynnik
-        for index, wartosc in self.zbiorniezdominowanyZnormalizowany.items():
+        for id, wartosc in self.zbiorniezdominowanyZnormalizowany.items():
             odleglosc_idealna = 0
             odleglosc_antyidealna = 0
 
             # odleglosc idealna
             for i in range(len(wartosc)):
-                odleglosc_idealna += self.waga_kryterium[i] * ((wartosc[i] - self.punkt_idealnyZnormalizowany[i])**2)
+                odleglosc_idealna += (wartosc[i] - self.punkt_idealnyZnormalizowany[i])**2
 
             # odleglosc antyidealna
             for i in range(len(wartosc)):
-                odleglosc_antyidealna += self.waga_kryterium[i] * ((wartosc[i] - self.punkt_antyidealnyZnormalizowany[i]) ** 2)
+                odleglosc_antyidealna += (wartosc[i] - self.punkt_antyidealnyZnormalizowany[i]) ** 2
 
-            self.wspolczynniki_skorigowane.append([index, odleglosc_antyidealna/(odleglosc_antyidealna + odleglosc_idealna)])
+            self.wspolczynniki_skorigowane.append([id, odleglosc_antyidealna/(odleglosc_antyidealna + odleglosc_idealna)])
 
 
     def normalizujZbior(self):
@@ -182,32 +136,33 @@ class MetodaTopsis:
                 self.zbiorniezdominowanyZnormalizowany[index].append(wartosc[i]/norma[i])
 
 
+    def run_algorithm(self):
+        TestClass.wyznaczZbiorNiezdominowany()
+        TestClass.normalizujZbior()
+        TestClass.wyznaczPunktIdealny()
+        TestClass.wyznaczPunktAntyIdealny_nadir()
+        TestClass.wyznaczWspolczynnikSkorigowany()
+        TestClass.utworzRankingRozwiazan()
+
+        self.zbior_decyzji = {}  #resetuj algorytm
+
 if __name__ == '__main__':
     TestClass = MetodaTopsis()
+    zbior_decyzji = {0: [4, 4, 5],
+                          1: [5, 4, -3],
+                          2: [-2, 0, -2],
+                          3: [0, 1, 5],
+                          4: [2, 1, 6],
+                          5: [1, -3, 1],
+                          6: [4, 1, 2],
+                          7: [3, 2, 3],
+                          8: [3, 3, 5],
+                          9: [3, -1, 6],
+                          10: [-1, 1, 3],
+                          11: [0, -1, 5],
+                          12: [4, -2, 2],
+                          13: [-1, 3, 4]}
 
-    # dostosuj kryteria minimalizacji/makssymalizacji
-    TestClass.okresl_kryterium_min_max()
+    TestClass.upload_parameters(zbior_decyzji)
 
-    TestClass.wyznaczZbiorNiezdominowany()
-    print('zbior niezdominowany: ')
-    print(TestClass.zbior_niezdominowany)
-
-    TestClass.normalizujZbior()
-    print(TestClass.zbior_decyzjiZnormalizowany)
-    print('punkty niezdominowane znormalizowane: ')
-    print(TestClass.zbiorniezdominowanyZnormalizowany)
-
-    TestClass.wyznaczPunktIdealny()
-    print('punkt idealny: ')
-    print(TestClass.punkt_idealnyZnormalizowany)
-
-    TestClass.wyznaczPunktAntyIdealny_nadir()
-    print('punkt antyidealny: ')
-    print(TestClass.punkt_antyidealnyZnormalizowany)
-
-    TestClass.wyznaczWspolczynnikSkorigowany()
-    print('wspl skorigowane: ')
-    print(TestClass.wspolczynniki_skorigowane)
-
-    print('ranking rozwiazan: ')
-    TestClass.utworzRankingRozwiazan()
+    TestClass.run_algorithm()
