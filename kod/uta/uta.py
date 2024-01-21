@@ -37,7 +37,7 @@ class UTA:
                         rank[-(j+1)] = rank[-(j+2)]
                     rank[i] = (key, val)
                     break
-        return {id: val for id, val in reversed(rank) if id is not None}
+        return {id: self.cars.get_all_parameters()[id] for id, val in reversed(rank) if id is not None}
 
     def __get_scores(self) -> Dict[int, float]:
         """

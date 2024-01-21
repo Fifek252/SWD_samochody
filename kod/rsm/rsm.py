@@ -26,7 +26,7 @@ class RSM:
         :param A0: set of status quo points
         :param A1: set of destination points
         """
-        self.variant = cars 
+        self.cars = cars 
         self.U = cars.get_parameters()
         self.a0 = A0
         self.a1 = A1
@@ -57,7 +57,7 @@ class RSM:
                         rank[-(j+1)] = rank[-(j+2)]
                     rank[i] = (key, val)
                     break
-        return {id: val for id, val in reversed(rank) if id is not None}
+        return {id: self.cars.get_all_parameters()[id] for id, val in reversed(rank) if id is not None}
 
 
     def __naiveOWDfilterU(self):
@@ -222,3 +222,4 @@ test_base.update_parameters([True, True])
 
 solver = RSM(test_base, A0, A1)
 print(solver.get_rank())
+
