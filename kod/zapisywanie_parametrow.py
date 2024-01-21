@@ -1,14 +1,14 @@
 class Variant:
     def __init__(self, parameters: dict[list[float]], minimalize: list[bool]):
-        self.params = []
+        self.params = {}
 
         self.minimalize = minimalize
         self.parameters = parameters   # pelna lista z parametrami
 
 
     def update_parameters(self, criteria: list[bool]):
-        self.params = []  # resetuj parametry
-        for samochod in self.parameters.values():  #iteracja po listach parametrow samochodu
+
+        for id, samochod in self.parameters.items():  #iteracja po listach parametrow samochodu
             nowe_kryteria = []  #wyznacz nowe kryteria (min/max/None)
 
             for index_kryterium, kryterium in enumerate(samochod):
@@ -18,7 +18,7 @@ class Variant:
                     else:
                         nowe_kryteria.append(-kryterium)
 
-            self.params.append(nowe_kryteria)
+            self.params[id] = nowe_kryteria
 
 
     def get_parameters(self):
