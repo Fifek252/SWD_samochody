@@ -1,28 +1,27 @@
 import math
+import sys
+import os
 
+sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
+from gui.car import Cars
 
 class MetodaTopsis:
 
-    def __init__(self):
-        self.zbior_decyzji = {}
-        self.zbior_decyzjiZnormalizowany = {}
-        self.zbiorniezdominowanyZnormalizowany = {}
+    def __init__(self, cars: Cars):
+        self.zbior_decyzji = cars.get_parameters()
+        self.zbior_decyzji_Znormalizowany = {}
+        self.zbior_niezdominowany_znormalizowany = {}
         self.wspolczynniki_skorigowane = []
         self.zbior_niezdominowany = {}
 
-        self.punkt_idealnyZnormalizowany = []
-        self.punkt_antyidealnyZnormalizowany = []
+        self.punkt_idealny_znormalizowany = []
+        self.punkt_antyidealny_znormalizowany = []
 
         self.zbior_rozwiazan = []   # indeksy rozwiazan od najlepszego do najgorszego
 
 
-
-    def upload_parameters(self, parameters):
-        self.zbior_decyzji = parameters
-
-
-    # Algorytm z filtracja
     def wyznaczZbiorNiezdominowany(self):
+
         przegladana_lista = self.zbior_decyzji.copy()
 
         for nazwa_punktu_Y, wartosc_Y in przegladana_lista.items():
@@ -60,12 +59,12 @@ class MetodaTopsis:
             parametr_min.append(float('inf'))
 
         # wyznacz najlepsza (najmniejsza) wartosc w kazdej kolumnie
-        for value in self.zbior_decyzjiZnormalizowany.values():
+        for value in self.zbior_decyzji_Znormalizowany.values():
             for i in range(len(parametr_min)):
                 if parametr_min[i] > value[i]:
                     parametr_min[i] = value[i]
 
-        self.punkt_idealnyZnormalizowany = parametr_min
+        self.punkt_idealny_znormalizowany = parametr_min
 
 
     def wyznaczPunktAntyIdealny_nadir(self):
@@ -75,34 +74,38 @@ class MetodaTopsis:
             parametr_max.append(float('-inf'))
 
         # wyznacz najgorsza (najwieksza) wartosc w kazdej kolumnie zbioru niezdominowanego
-        for value in self.zbiorniezdominowanyZnormalizowany.values():
+        for value in self.zbior_niezdominowany_znormalizowany.values():
             for i in range(len(parametr_max)):
                 if parametr_max[i] < value[i]:
                     parametr_max[i] = value[i]
 
-        self.punkt_antyidealnyZnormalizowany = parametr_max
+        self.punkt_antyidealny_znormalizowany = parametr_max
 
 
     def utworzRankingRozwiazan(self):
         sorted_list = sorted(self.wspolczynniki_skorigowane, key=lambda x: x[1])
 
+        ostateczne_rozwiazanie = {}
         for result in sorted_list:
-            print("najlepszy punkt, id: ", result[0], 'kryteria: ', self.zbior_decyzji[result[0]])
+            ostateczne_rozwiazanie[result[0]] = self.zbior_decyzji[result[0]]
+
+        return ostateczne_rozwiazanie
+
 
 
     def wyznaczWspolczynnikSkorigowany(self):
         # dla wszystkich punktow niezdominowanych wyznacz wspolczynnik
-        for id, wartosc in self.zbiorniezdominowanyZnormalizowany.items():
+        for id, wartosc in self.zbior_niezdominowany_znormalizowany.items():
             odleglosc_idealna = 0
             odleglosc_antyidealna = 0
 
             # odleglosc idealna
             for i in range(len(wartosc)):
-                odleglosc_idealna += (wartosc[i] - self.punkt_idealnyZnormalizowany[i])**2
+                odleglosc_idealna += (wartosc[i] - self.punkt_idealny_znormalizowany[i]) ** 2
 
             # odleglosc antyidealna
             for i in range(len(wartosc)):
-                odleglosc_antyidealna += (wartosc[i] - self.punkt_antyidealnyZnormalizowany[i]) ** 2
+                odleglosc_antyidealna += (wartosc[i] - self.punkt_antyidealny_znormalizowany[i]) ** 2
 
             self.wspolczynniki_skorigowane.append([id, odleglosc_antyidealna/(odleglosc_antyidealna + odleglosc_idealna)])
 
@@ -125,15 +128,15 @@ class MetodaTopsis:
 
         # znormalizuj wartosci w kolumnach zbioru decyzji
         for index, wartosc in self.zbior_decyzji.items():
-            self.zbior_decyzjiZnormalizowany[index] = []
+            self.zbior_decyzji_Znormalizowany[index] = []
             for i in range(len(norma)):
-                self.zbior_decyzjiZnormalizowany[index].append(wartosc[i]/norma[i])
+                self.zbior_decyzji_Znormalizowany[index].append(wartosc[i] / norma[i])
 
         # znormalizuj wartosci w kolumnach zbioru niezdominowanego
         for index, wartosc in self.zbior_niezdominowany.items():
-            self.zbiorniezdominowanyZnormalizowany[index] = []
+            self.zbior_niezdominowany_znormalizowany[index] = []
             for i in range(len(norma)):
-                self.zbiorniezdominowanyZnormalizowany[index].append(wartosc[i]/norma[i])
+                self.zbior_niezdominowany_znormalizowany[index].append(wartosc[i] / norma[i])
 
 
     def run_algorithm(self):
@@ -142,12 +145,12 @@ class MetodaTopsis:
         TestClass.wyznaczPunktIdealny()
         TestClass.wyznaczPunktAntyIdealny_nadir()
         TestClass.wyznaczWspolczynnikSkorigowany()
-        TestClass.utworzRankingRozwiazan()
+        return TestClass.utworzRankingRozwiazan()
 
-        self.zbior_decyzji = {}  #resetuj algorytm
+
 
 if __name__ == '__main__':
-    TestClass = MetodaTopsis()
+
     zbior_decyzji = {0: [4, 4, 5],
                           1: [5, 4, -3],
                           2: [-2, 0, -2],
@@ -163,6 +166,7 @@ if __name__ == '__main__':
                           12: [4, -2, 2],
                           13: [-1, 3, 4]}
 
-    TestClass.upload_parameters(zbior_decyzji)
-
-    TestClass.run_algorithm()
+    test_base = Cars(zbior_decyzji, [True, True, True])
+    test_base.update_parameters([True, True, True])
+    TestClass = MetodaTopsis(test_base)
+    print(TestClass.run_algorithm())
