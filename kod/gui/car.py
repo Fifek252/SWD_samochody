@@ -1,4 +1,5 @@
 from typing import List, Union, Dict
+import pandas as pd
 
 """ _____________
 |  ________  |    o   o
@@ -12,7 +13,7 @@ class Cars:
     Class representing set of all cars in data base
     Object Cars should be created before important criteria are chosen
     """
-    def __init__(self, parameters: Dict[int, List[Union[int, float]]], minimalize: List[bool]):
+    def __init__(self, parameters: Dict[Union[int, str], List[Union[int, float]]], minimalize: List[bool]):
         """
         :param parameters: a dictionary mapping car's id to all its parameters
         :param minimalize: a list specifying if criterion is to be minimalized or not

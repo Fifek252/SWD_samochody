@@ -23,7 +23,7 @@ class UTA:
         self.cars = cars 
         self.ch_coeffs = ch_coeffs
 
-    def get_rank(self) -> Dict[int, List[Union[int, float]]]:
+    def get_rank(self) -> Dict[Union[int, str], List[Union[int, float]]]:
         """
         Function creates ranking of top 20 cars
         :return: dictionary mapping car's id to its score function value in decreasing order
@@ -93,20 +93,22 @@ class UTA:
         return scores
         
 
-X = {0: [4, 4, 5],
-                          1: [5, 4, -3],
-                          2: [-2, 0, -2],
-                          3: [0, 1, 5],
-                          4: [2, 1, 6],
-                          5: [1, -3, 1],
-                          6: [4, 1, 2],
-                          7: [3, 2, 3],
-                          8: [3, 3, 5],
-                          9: [3, -1, 6],
-                          10: [-1, 1, 3],
-                          11: [0, -1, 5],
-                          12: [4, -2, 2],
-                          13: [-1, 3, 4]}
+X = {
+    'Bruce Lee': [4, 4, 5],
+    'Sławomir Borewicz': [5, 4, -3],
+    'Alf': [-2, 0, -2],
+    'Bruce Willis': [0, 1, 5],
+    'Królik Bugs': [2, 1, 6],
+    'Clint Eastwood': [1, -3, 1],
+    'Chuck Norris': [4, 1, 2],
+    'Darth Vader': [3, 2, 3],
+    'Kevin McCallister': [3, 3, 5],
+    'Steven Seagal': [3, -1, 6],
+    'Ojciec Mateusz': [-1, 1, 3],
+    'Saxton Hale': [0, -1, 5],
+    'Król Julian': [4, -2, 2],
+    'John Rambo': [-1, 3, 4]
+    }
 
 test_base = Cars(X, [True, True, True])
 test_base.update_parameters([True, False, True])
