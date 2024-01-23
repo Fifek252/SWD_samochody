@@ -37,9 +37,12 @@ class RSM:
         self.a0 = self.__naiveOWDfilterA(self.a0)
         self.a1 = self.__naiveOWDfilterA(self.a1)
         self.__naiveOWDfilterU()
+
         
         self.__consistent_classes()
+
         self.__calculate_weights()
+
 
         scores = self.__get_scores()
 
@@ -151,7 +154,7 @@ class RSM:
             A1c = self.a1
             A0c = [p0 for p0 in self.a0 if all(all(i <= j for i, j in zip(p1, p0)) for p1 in self.a1)]
 
-        Uc = {k: v for k, v in self.U.items() if any(all(i <= j for i, j in zip(v, p0)) for p0 in self.a0) or
+        Uc = {k: v for k, v in self.U.items() if any(all(i <= j for i, j in zip(v, p0)) for p0 in self.a0) and
             any(all(i >= j for i, j in zip(v, p1)) for p1 in self.a1)}
         
         self.U = Uc
