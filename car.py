@@ -51,7 +51,6 @@ class Cars:
                         new_criteria.append(-crit)
 
             self.params[id] = new_criteria
-        print(self.params)
 
 
     def get_parameters(self):
@@ -75,7 +74,6 @@ class Cars:
 
             for i in range(m-1):
                 database[elems[i+1,1]] = [elems[i+1, j+3] for j in range(7)] 
-                print([elems[i+1, j+3] for j in range(7)])
             return database
 
 
