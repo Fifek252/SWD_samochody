@@ -9,11 +9,12 @@ import pandas as pd
 """
 
 class Cars:
+        
     """
     Class representing set of all cars in data base
     Object Cars should be created before important criteria are chosen
     """
-    def __init__(self, parameters: Dict[Union[int, str], List[Union[int, float]]], minimalize: List[bool]):
+    def __init__(self, path, minimalize: List[bool]):
         """
         :param parameters: a dictionary mapping car's id to all its parameters
         :param minimalize: a list specifying if criterion is to be minimalized or not
@@ -21,7 +22,7 @@ class Cars:
         self.params = {}
 
         self.minimalize = minimalize
-        self.parameters = parameters
+        self.parameters = self.read_as_dict(path)
         """
         :param self.params: a dictionary mapping car's id to considered parameters
         """
@@ -47,7 +48,6 @@ class Cars:
 
             self.params[id] = new_criteria
 
-
     def get_parameters(self):
         """
         :return: dict mapping car's id to considered parameters
@@ -60,6 +60,15 @@ class Cars:
         """
         return self.parameters
 
+    def read_as_dict(self,path: str) -> Dict[Union[int, float], List[Union[int, float]]]:
+            dataframe = pd.read_excel(path)
+            database = {}
 
+            m, _ = dataframe.values.shape
+            elems = dataframe.values
+
+            for i in range(m-1):
+                database[elems[i+1,1]] = [elems[i+1, j+2] for j in range(8)] 
+            return database
 
 

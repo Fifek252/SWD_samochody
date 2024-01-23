@@ -7,7 +7,6 @@ from screen import Screen
 
 from MainWindow import Ui_MainScreen
 from TopsisScreen import Ui_TopsisScreen
-from data_load import read_as_dict
 from ranking_screen import Ui_RankingScreen
 from rsm_screen import Ui_RsmScreen
 from sp_screen import Ui_SpScreen
@@ -15,6 +14,7 @@ from uta_screen import Ui_UtaScreen
 from database import Ui_DatabaseScreen
 from typing import Dict,Union,List
 import pandas as pd
+from car import Cars
 
 class Gui:
     '''
@@ -89,7 +89,7 @@ class Gui:
         
 
 if __name__ == "__main__":
-    database = read_as_dict("bazadanych.xlsx")
+    database = Cars("bazadanych.xlsx",[False,True,False,False,True,True,False,False])
     gui = Gui(database)
     gui.run()
     
