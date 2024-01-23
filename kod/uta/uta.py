@@ -2,7 +2,6 @@ from typing import List, Union, Tuple, Dict
 import numpy as np
 from math import inf
 
-
 class Variant:
     def __init__(self, id: int, parameters: List[Union[int, float]], minimalize: List[bool], criteria: List[bool]):
         self.__id = id
@@ -71,11 +70,4 @@ def UTA(U: List[List[Union[int, float]]], ch_coeffs: List[List[float]]) -> List[
         
         for m, var in enumerate(Uc):
             Uglobal[m] += uFunN(var)
-        
-
-
-
-
-            
-            
 

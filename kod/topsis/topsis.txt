@@ -1,1 +1,0 @@
-Plik stworzono, żebym mógł zrobić push folderu na gita.
