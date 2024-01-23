@@ -37,11 +37,12 @@ class Cars:
         If parameter is to be maximalized, it is multiplied by -1
         :param criteria: a list speciffying if criterion is taken into account
         """ 
+
         criteria = sorted(criteria)
-        self.criteria = [True if elem in criteria else False for elem in ['Maksymalna prędkość', 'Pojemność bagażnika', 'Moc silnika', 'Pojemność silnika', 'Przebieg', 'Średnie spalanie', 'Cena']]
+        self.criteria = [True if elem in criteria else False for elem in sorted(['Maksymalna prędkość', 'Pojemność bagażnika', 'Moc silnika', 'Pojemność silnika', 'Przebieg', 'Średnie spalanie', 'Cena'])]
+
         for id, car in self.parameters.items():
             new_criteria = []
-            if len(self.criteria) != len(car): print(f"len(car) = {len(car)}, len(criteria) = {len(self.criteria)}")
             for idx, crit in enumerate(car):
                 if self.criteria[idx]:
                     if self.minimalize[idx]:
@@ -50,6 +51,7 @@ class Cars:
                         new_criteria.append(-crit)
 
             self.params[id] = new_criteria
+        print(self.params)
 
 
     def get_parameters(self):
@@ -73,6 +75,7 @@ class Cars:
 
             for i in range(m-1):
                 database[elems[i+1,1]] = [elems[i+1, j+3] for j in range(7)] 
+                print([elems[i+1, j+3] for j in range(7)])
             return database
 
 
