@@ -74,4 +74,3 @@ def read_as_dict(path: str):# -> Dict[Union[int, float], List[Union[int, float]]
     return base
 
 
-
