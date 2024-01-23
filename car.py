@@ -22,7 +22,7 @@ class Cars:
         """
         self.params = {}
 
-        self.minimalize = [True, False, False, True, True, False, False]
+        self.minimalize = [False, False, False, False, True, True, True]
         self.parameters = self.read_as_dict(path)
         """
         :param self.params: a dictionary mapping car's id to considered parameters

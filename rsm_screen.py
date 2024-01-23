@@ -20,14 +20,24 @@ STATUS_QUO_TEXT = "Aktualny zbiór punktów status-quo: "
 MAX_POINTS = 5
 
 class Point:
-    def __init__(self,point : list):
+    def __init__(self,point : list,criteria_chosen):
         self.point = point
+        self.criteria_chosen = criteria_chosen
+        self.minimize()
+
+        
+    def minimize(self):
+
+        for idx,val in enumerate(self.point):
+            if self.criteria_chosen[idx]  in ['Maksymalna prędkość', 'Pojemność bagażnika', 'Moc silnika', 'Pojemność silnika']:
+                self.point[idx] = -val
+                
     def get_point(self):
         return self.point
 
 class Ui_RsmScreen:
     def __init__(self, RsmScreen,gui,criteria):
-        self.criteria = criteria
+        self.criteria = sorted(criteria)
         self.gui = gui
         self.trashcan = QtGui.QIcon("trashcan.png")
         RsmScreen.setObjectName("RsmScreen")
@@ -231,7 +241,7 @@ class Ui_RsmScreen:
     def update_aspiration_points(self,idx,input):
         self.asp_list[idx] = input
         if  0 not in self.asp_list and len(self.asp_points) < MAX_POINTS:
-            point = Point(self.asp_list)
+            point = Point(self.asp_list,self.criteria)
             self.asp_points.append(point.get_point())
             self.asp_list = [0 for _ in self.criteria]
             self.aspiracje.setText(ASPIRACJE_TEXT + '\n'+ '\n'.join(map(str,self.asp_points)))
@@ -242,7 +252,7 @@ class Ui_RsmScreen:
     def update_status_quo_points(self,idx,input):
         self.quo_list[idx] = input
         if  0 not in self.quo_list and len(self.quo_points) < MAX_POINTS:
-            point = Point(self.quo_list)
+            point = Point(self.quo_list,self.criteria)
             self.quo_points.append(point.get_point())
             self.quo_list = [0 for _ in self.criteria]
             self.status_quo.setText(STATUS_QUO_TEXT + '\n'+ '\n'.join(map(str,self.quo_points)))
