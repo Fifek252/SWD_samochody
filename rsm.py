@@ -39,7 +39,6 @@ class RSM:
         self.__naiveOWDfilterU()
         
         self.__consistent_classes()
-        print(self.a0,"\n",self.a1)
         self.__calculate_weights()
 
         scores = self.__get_scores()
@@ -52,7 +51,7 @@ class RSM:
                         rank[-(j+1)] = rank[-(j+2)]
                     rank[i] = (key, val)
                     break
-        return {id: self.cars.get_all_parameters()[id] for id, val in reversed(rank) if id is not None}
+        return {id: self.cars.get_all_parameters()[id] for id,val in reversed(rank) if id is not None}
 
 
     def __naiveOWDfilterU(self):

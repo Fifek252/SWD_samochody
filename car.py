@@ -22,7 +22,7 @@ class Cars:
         """
         self.params = {}
 
-        self.minimalize = [False, False, False, False, True, True, True]
+        self.minimalize = [True, False, False, False, False, True, True]
         self.parameters = self.read_as_dict(path)
         """
         :param self.params: a dictionary mapping car's id to considered parameters
@@ -38,7 +38,7 @@ class Cars:
         :param criteria: a list speciffying if criterion is taken into account
         """ 
 
-        self.criteria = [True if elem in criteria else False for elem in ['Maksymalna prędkość', 'Pojemność bagażnika', 'Moc silnika', 'Pojemność silnika', 'Przebieg', 'Średnie spalanie', 'Cena']]
+        self.criteria = [True if elem in sorted(criteria) else False for elem in ['Maksymalna prędkość', 'Pojemność bagażnika', 'Moc silnika', 'Pojemność silnika', 'Przebieg', 'Średnie spalanie', 'Cena']]
         for id, car in self.parameters.items():
             new_criteria = []
             if len(self.criteria) != len(car): print(f"len(car) = {len(car)}, len(criteria) = {len(self.criteria)}")
@@ -73,6 +73,7 @@ class Cars:
 
             for i in range(m-1):
                 database[elems[i+1,1]] = [elems[i+1, j+3] for j in range(7)] 
+                print([elems[i+1, j+3] for j in range(7)])
             return database
 
 
