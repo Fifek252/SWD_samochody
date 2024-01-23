@@ -27,7 +27,7 @@ class Ui_MainScreen:
         self.background = QtWidgets.QLabel(self.centralwidget)
         self.background.setGeometry(QtCore.QRect(0, 0, 801, 881))
         self.background.setText("")
-        self.background.setPixmap(QtGui.QPixmap("kod\\gui\\background.jpg"))
+        self.background.setPixmap(QtGui.QPixmap("background.jpg"))
         self.background.setScaledContents(True)
         self.background.setObjectName("background")
         
@@ -203,3 +203,6 @@ class Ui_MainScreen:
         flag = self.enough_checked()
         if flag:
             self.gui.show_uta(self.checked_boxes)
+            
+    def get_checked_boxes(self):
+        return self.checked_boxes

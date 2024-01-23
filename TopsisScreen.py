@@ -10,6 +10,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from screen import Screen
+from topsis import MetodaTopsis
 
 INPUT_X = 30
 INPUT_Y_START = 500
@@ -27,7 +28,7 @@ class Ui_TopsisScreen:
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(0, 0, 801, 881))
         self.label.setText("")
-        self.label.setPixmap(QtGui.QPixmap("kod\\gui\\background.jpg"))
+        self.label.setPixmap(QtGui.QPixmap("background.jpg"))
         self.label.setScaledContents(True)
         self.label.setObjectName("label")
         
@@ -194,6 +195,7 @@ class Ui_TopsisScreen:
             self.error_sum("Suma wag kryteriów musi wynosić 1,\naby można było zastosować metodę topsis")
         elif 0 in self.weights:
             self.error_sum("Proszę nadać niezerową wagę wszystkim wybranym kryteriom.\nW celu usunięcia kryterium można wrócić do Menu.")
+            
 
 # if __name__ == "__main__":
 #     import sys

@@ -89,7 +89,7 @@ class Gui:
         
 
 if __name__ == "__main__":
-    database = Cars("bazadanych.xlsx")
+    database = Cars("bazadanych.xlsx",[False,True,False,False,True,True,False,False])
     gui = Gui(database)
     gui.run()
     

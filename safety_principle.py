@@ -1,12 +1,7 @@
 from typing import List, Union, Dict, Tuple
 import numpy as np
 import math
-import sys
-import os
-
-sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
-
-from gui.car import Cars
+from car import Cars
 
 """ _____________
 |  ________  |    o   o
@@ -16,7 +11,7 @@ from gui.car import Cars
 """
 
 
-class RSM:
+class SP:
     """
     Class creates ranking using RSM method
     """

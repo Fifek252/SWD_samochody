@@ -10,6 +10,11 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from screen import Screen
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
+
+from rsm.rsm import RSM
 
 INPUT_X = 30
 INPUT_Y_START = 450
@@ -27,7 +32,7 @@ class Ui_RsmScreen:
     def __init__(self, RsmScreen,gui,criteria):
         self.criteria = criteria
         self.gui = gui
-        self.trashcan = QtGui.QIcon("kod\\gui\\trashcan.png")
+        self.trashcan = QtGui.QIcon("trashcan.png")
         RsmScreen.setObjectName("RsmScreen")
         RsmScreen.resize(781, 878)
         
@@ -37,7 +42,7 @@ class Ui_RsmScreen:
         self.background = QtWidgets.QLabel(self.centralwidget)
         self.background.setGeometry(QtCore.QRect(0, 0, 801, 881))
         self.background.setText("")
-        self.background.setPixmap(QtGui.QPixmap("kod\\gui\\background.jpg"))
+        self.background.setPixmap(QtGui.QPixmap("background.jpg"))
         self.background.setScaledContents(True)
         self.background.setObjectName("background")
         
@@ -135,7 +140,7 @@ class Ui_RsmScreen:
         font = QtGui.QFont("Arial",10)
         font.setBold(True)
         self.search.setFont(font)
-        self.search.clicked.connect(lambda: self.go_to_ranking())
+        self.search.clicked.connect(lambda: self.do_rsm())
         
         self.enter_idx = 1
         for i,crit in enumerate(sorted(self.criteria)):
@@ -273,3 +278,8 @@ class Ui_RsmScreen:
     def clear_quo_points(self):
         self.quo_points.clear()
         self.status_quo.setText(STATUS_QUO_TEXT +"\n[]")
+        
+    def do_rsm(self):
+        self.gui.database.update_parameters()
+        self.ranking = RSM(self.gui.database,self.quo_points,self.asp_points)
+        print(self.ranking)

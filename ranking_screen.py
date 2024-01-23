@@ -13,10 +13,10 @@ from screen import Screen
 import sys
 import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
-
-from rsm.rsm import RSM
-from safety_principle.safety_principle import SP
-from uta.uta import UTA
+from topsis import MetodaTopsis
+from rsm import RSM
+from safety_principle import SP
+from uta import UTA
 
 class Ui_RankingScreen:
     def __init__(self, RankingScreen,gui,method,criteria):
@@ -79,8 +79,10 @@ class Ui_RankingScreen:
         #     self.display_ranking()
             
         if self.method == Screen.RSM:
-            self.gui.database.update_parameters()
-            self.ranking =  RSM(self.gui.database,)
+            for _,row in self.gui.database.head(self.show_nr).iterrows():
+                self.ranking.append(row.tolist())
+            self.display_ranking()
+        
         # elif self.method == Screen.SP:
         #     for _,row in self.gui.database.head(self.show_nr).iterrows():
         #         self.ranking.append(row.tolist())

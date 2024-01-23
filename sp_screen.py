@@ -27,7 +27,7 @@ class Ui_SpScreen:
     def __init__(self, SpScreen,gui,criteria):
         self.criteria = criteria
         self.gui = gui
-        self.trashcan = QtGui.QIcon("kod\\gui\\trashcan.png")
+        self.trashcan = QtGui.QIcon("trashcan.png")
         SpScreen.setObjectName("SpScreen")
         SpScreen.resize(781, 878)
         
@@ -37,7 +37,7 @@ class Ui_SpScreen:
         self.background = QtWidgets.QLabel(self.centralwidget)
         self.background.setGeometry(QtCore.QRect(0, 0, 801, 881))
         self.background.setText("")
-        self.background.setPixmap(QtGui.QPixmap("kod\\gui\\background.jpg"))
+        self.background.setPixmap(QtGui.QPixmap("background.jpg"))
         self.background.setScaledContents(True)
         self.background.setObjectName("background")
         

@@ -1,12 +1,7 @@
 from typing import List, Union, Dict, Tuple
 import numpy as np
 from math import inf
-import sys
-import os
-
-sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
-
-from gui.car import Cars
+from car import Cars
 
 """ _____________
 |  ________  |    o   o
@@ -195,59 +190,5 @@ class RSM:
         
         return scores
     
-A1 = [[-1,-1],[-2,0],[0,-2]]
-A0 = [[2,0],[1,2]]
-X1 = {
-    0: [5, 5],
-    1: [3, 6],
-    2: [4, 4],
-    3: [5, 3],
-    4: [3, 3],
-    5: [1, 8],
-    6: [3, 4],
-    7: [4, 5],
-    8: [3, 10],
-    9: [6, 6],
-    10: [4, 1],
-    11: [3, 5],
-    12: [0, 0],
-    13: [-1.5, -0.5],
-    14: [-1, 1.5],
-    15: [1, -1],
-    16: [1.75, 1],
-    17: [-1.5, 0.5]
-    }
 
-X2 = {
-    'Rocky Balboa': [5, 5],
-    'Wściekły wąż': [3, 6],
-    'Mały głód': [4, 4],
-    'Pani z dziekanatu': [5, 3],
-    'Tytanowy Janusz': [3, 3],
-    'Pyro': [1, 8],
-    'Bear Grylls': [3, 4],
-    'TurboDymoMan': [4, 5],
-    'Noriaki Kasai': [3, 10],
-    'Adam Małysz': [6, 6],
-    'Arnold Schwarzeneger': [4, 1],
-    'Czesio': [3, 5],
-    'Ferdynand Kiepski': [0, 0],
-    'Franek Kimono': [-1.5, -0.5],
-    'Jan Paweł II': [-1, 1.5],
-    'MacGyver': [1, -1],
-    'Hulk Hogan': [1.75, 1],
-    'Al Bundy': [-1.5, 0.5]
-    }
-
-test_base = Cars(X1, [True, True])
-test_base.update_parameters([True, True])
-
-solver = RSM(test_base, A0, A1)
-print(solver.get_rank())
-
-test_base = Cars(X2, [True, True])
-test_base.update_parameters([True, True])
-
-solver = RSM(test_base, A0, A1)
-print(solver.get_rank())
 
