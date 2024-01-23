@@ -63,7 +63,7 @@ class UTA:
             for i, x in enumerate(val):
                 diff = abs(ga[i] - gi[i])
                 x_norm = (x-gi[i])/diff
-                coeffs = self.ch_coeffs
+                coeffs = self.ch_coeffs[i]
                 if x_norm < 0:
                     x_norm = abs(x_norm)
                     coeffs = coeffs.reversed()

@@ -208,7 +208,14 @@ class Ui_UtaScreen:
         
     def do_uta(self):
         self.gui.database.update_parameters(self.criteria)
-        self.ranking = UTA(self.gui.database,self.usefulness_fcn)
+        usefulness_values = []
+        for row in range(len(self.usefulness_fcn)):
+            usefulness_row = []
+            for col in range(len(row)):
+                usefulness_row.append(int(self.usefulness_fcn[row][col].text()))
+            usefulness_values.append(usefulness_row)
+        
+        self.ranking = UTA(self.gui.database,usefulness_values)
         print(self.ranking.get_rank())
         
     
