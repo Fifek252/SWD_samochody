@@ -10,7 +10,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from screen import Screen
-from gui.car import Cars
+from car import Cars
 
 class Ui_RankingScreen:
     def __init__(self, RankingScreen,gui,method,criteria,database):
@@ -67,25 +67,25 @@ class Ui_RankingScreen:
         
         ''' Teraz kod zależny od tego, z jakiego ekranu przychodzimy, czyli którą metodę wybraliśmy
         Na razie zrobiłem tylko dla topsis, i to nic nie liczy tylko printuje 10 pierwszych rzeczy z tej bazy'''
-        if self.method == Screen.TOPSIS:
-            for _,row in self.gui.database.head(self.show_nr).iterrows():
-                self.ranking.append(row.tolist())
-            self.display_ranking()
+        # if self.method == Screen.TOPSIS:
+        #     for _,row in self.gui.database.head(self.show_nr).iterrows():
+        #         self.ranking.append(row.tolist())
+        #     self.display_ranking()
             
-        elif self.method == Screen.RSM:
-            for _,row in self.gui.database.head(self.show_nr).iterrows():
-                self.ranking.append(row.tolist())
-            self.display_ranking()
+        # elif self.method == Screen.RSM:
+        #     for _,row in self.gui.database.head(self.show_nr).iterrows():
+        #         self.ranking.append(row.tolist())
+        #     self.display_ranking()
         
-        elif self.method == Screen.SP:
-            for _,row in self.gui.database.head(self.show_nr).iterrows():
-                self.ranking.append(row.tolist())
-            self.display_ranking()
+        # elif self.method == Screen.SP:
+        #     for _,row in self.gui.database.head(self.show_nr).iterrows():
+        #         self.ranking.append(row.tolist())
+        #     self.display_ranking()
         
-        elif self.method == Screen.UTA:
-            for _,row in self.gui.database.head(self.show_nr).iterrows():
-                self.ranking.append(row.tolist())
-            self.display_ranking()
+        # elif self.method == Screen.UTA:
+        #     for _,row in self.gui.database.head(self.show_nr).iterrows():
+        #         self.ranking.append(row.tolist())
+        #     self.display_ranking()
         
 
         self.retranslateUi(RankingScreen)

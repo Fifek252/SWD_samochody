@@ -8,7 +8,7 @@ from screen import Screen
 from MainWindow import Ui_MainScreen
 from TopsisScreen import Ui_TopsisScreen
 from data_load import read_as_dict
-#from ranking_screen import Ui_RankingScreen
+from ranking_screen import Ui_RankingScreen
 from rsm_screen import Ui_RsmScreen
 from sp_screen import Ui_SpScreen
 from uta_screen import Ui_UtaScreen
@@ -68,12 +68,12 @@ class Gui:
         self.stacked_widget.setCurrentWidget(window)
         self.stacked_widget.show()
     
-    # def show_ranking(self,method : Screen,criteria):
-    #     window = QtWidgets.QMainWindow()
-    #     Ui_RankingScreen(window,self,method,criteria,self.database)
-    #     self.stacked_widget.addWidget(window)
-    #     self.stacked_widget.setCurrentWidget(window)
-    #     self.stacked_widget.show()
+    def show_ranking(self,method : Screen,criteria):
+        window = QtWidgets.QMainWindow()
+        Ui_RankingScreen(window,self,method,criteria,self.database)
+        self.stacked_widget.addWidget(window)
+        self.stacked_widget.setCurrentWidget(window)
+        self.stacked_widget.show()
         
     def show_database(self):
         window = QtWidgets.QMainWindow()

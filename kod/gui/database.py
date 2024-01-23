@@ -35,7 +35,7 @@ class Ui_DatabaseScreen:
 
     def load_excel_data(self):
         try:
-            workbook = self.gui.database
+            workbook = openpyxl.load_workbook("bazadanych.xlsx",data_only=True)
             self.gui.stacked_widget.setFixedHeight(876)
             self.gui.stacked_widget.setFixedWidth(1080)
             self.sheet = workbook.active
