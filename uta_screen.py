@@ -1,5 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from screen import Screen
+from uta import UTA
 
 INPUT_X = 30
 INPUT_Y_START = 450
@@ -8,7 +9,7 @@ class Ui_UtaScreen:
     def __init__(self, UtaScreen,gui,criteria):
         self.gui = gui
         self.criteria = criteria
-        self.trashcan = QtGui.QIcon("kod\\gui\\trashcan.png")
+        self.trashcan = QtGui.QIcon("trashcan.png")
 
         self.centralwidget = QtWidgets.QWidget(UtaScreen)
         self.centralwidget.setObjectName("centralwidget")
@@ -16,7 +17,7 @@ class Ui_UtaScreen:
         self.background = QtWidgets.QLabel(self.centralwidget)
         self.background.setGeometry(QtCore.QRect(0, 0, 801, 881))
         self.background.setText("")
-        self.background.setPixmap(QtGui.QPixmap("kod\\gui\\background.jpg"))
+        self.background.setPixmap(QtGui.QPixmap("background.jpg"))
         self.background.setScaledContents(True)
         self.background.setObjectName("background")
         
@@ -159,7 +160,7 @@ class Ui_UtaScreen:
         font = QtGui.QFont("Arial",10)
         font.setBold(True)
         self.search.setFont(font)
-        self.search.clicked.connect(lambda: self.go_to_ranking())
+        self.search.clicked.connect(lambda: self.do_uta())
         self.search.show()
         
   
@@ -204,5 +205,10 @@ class Ui_UtaScreen:
         else:
             self.error_first_row_sum()
             return
+        
+    def do_uta(self):
+        self.gui.database.update_parameters(self.criteria)
+        self.ranking = UTA(self.gui.database,self.usefulness_fcn)
+        print(self.ranking.get_rank())
         
     

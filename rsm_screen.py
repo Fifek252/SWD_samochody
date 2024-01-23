@@ -25,7 +25,7 @@ class Point:
         self.criteria_chosen = criteria_chosen
         print(self.criteria_chosen)
         self.minimize()
-        print(self.point)
+
         
     def minimize(self):
 
@@ -288,7 +288,6 @@ class Ui_RsmScreen:
         self.status_quo.setText(STATUS_QUO_TEXT +"\n[]")
         
     def do_rsm(self):
-        print(self.gui.database)
         self.gui.database.update_parameters(self.criteria)
         self.ranking = RSM(self.gui.database,self.quo_points,self.asp_points)
         print(self.ranking.get_rank())
