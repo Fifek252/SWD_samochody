@@ -12,7 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from screen import Screen
 
 INPUT_X = 30
-INPUT_Y_START = 600
+INPUT_Y_START = 500
 
 class Ui_TopsisScreen:
     def __init__(self, TopsisScreen,gui,criteria):
@@ -32,12 +32,12 @@ class Ui_TopsisScreen:
         self.label.setObjectName("label")
         
         self.tytul_topsis = QtWidgets.QLabel(self.centralwidget)
-        self.tytul_topsis.setGeometry(QtCore.QRect(190, 450, 421, 61))
+        self.tytul_topsis.setGeometry(QtCore.QRect(190, 400, 421, 61))
         self.tytul_topsis.setStyleSheet("border-color: rgb(159, 255, 124);")
         self.tytul_topsis.setObjectName("tytul_topsis")
         
         self.info_topsis = QtWidgets.QLabel(self.centralwidget)
-        self.info_topsis.setGeometry(QtCore.QRect(10, 490, 761, 41))
+        self.info_topsis.setGeometry(QtCore.QRect(10, 440, 761, 41))
         self.info_topsis.setObjectName("info_topsis")
 
         self.menu = QtWidgets.QPushButton(self.centralwidget)

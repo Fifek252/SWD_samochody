@@ -2,7 +2,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from screen import Screen
 
 INPUT_X = 30
-INPUT_Y_START = 550
+INPUT_Y_START = 450
 
 class Ui_UtaScreen:
     def __init__(self, UtaScreen,gui,criteria):
@@ -154,7 +154,7 @@ class Ui_UtaScreen:
 
         
         self.search = QtWidgets.QPushButton(self.centralwidget)
-        self.search.setGeometry(QtCore.QRect(INPUT_X + 300,INPUT_Y_START-40,155,28))
+        self.search.setGeometry(QtCore.QRect(INPUT_X + 300,INPUT_Y_START+self.enter_idx*50-30,155,28))
         self.search.setText("Szukaj")
         font = QtGui.QFont("Arial",10)
         font.setBold(True)
