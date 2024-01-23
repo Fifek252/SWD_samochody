@@ -136,33 +136,9 @@ class MetodaTopsis:
 
 
     def run_algorithm(self):
-        TestClass.wyznaczZbiorNiezdominowany()
-        TestClass.normalizujZbior()
-        TestClass.wyznaczPunktIdealny()
-        TestClass.wyznaczPunktAntyIdealny_nadir()
-        TestClass.wyznaczWspolczynnikSkorigowany()
-        return TestClass.utworzRankingRozwiazan()
-
-
-
-if __name__ == '__main__':
-
-    zbior_decyzji = {0: [4, 4, 5],
-                          1: [5, 4, -3],
-                          2: [-2, 0, -2],
-                          3: [0, 1, 5],
-                          4: [2, 1, 6],
-                          5: [1, -3, 1],
-                          6: [4, 1, 2],
-                          7: [3, 2, 3],
-                          8: [3, 3, 5],
-                          9: [3, -1, 6],
-                          10: [-1, 1, 3],
-                          11: [0, -1, 5],
-                          12: [4, -2, 2],
-                          13: [-1, 3, 4]}
-
-    test_base = Cars(zbior_decyzji, [True, True, True])
-    test_base.update_parameters([True, True, True])
-    TestClass = MetodaTopsis(test_base)
-    print(TestClass.run_algorithm())
+        self.wyznaczZbiorNiezdominowany()
+        self.normalizujZbior()
+        self.wyznaczPunktIdealny()
+        self.wyznaczPunktAntyIdealny_nadir()
+        self.wyznaczWspolczynnikSkorigowany()
+        return self.utworzRankingRozwiazan()
