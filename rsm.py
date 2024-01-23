@@ -37,10 +37,13 @@ class RSM:
         self.a0 = self.__naiveOWDfilterA(self.a0)
         self.a1 = self.__naiveOWDfilterA(self.a1)
         self.__naiveOWDfilterU()
+        print(self.U)
         
         self.__consistent_classes()
-        print(self.a0,"\n",self.a1)
+        print(self.U)
+        
         self.__calculate_weights()
+        print(self.U)
 
         scores = self.__get_scores()
 

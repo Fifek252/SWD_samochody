@@ -22,14 +22,14 @@ class Cars:
         """
         self.params = {}
 
-        self.minimalize = [False, False, False, False, True, True, True]
+        self.minimalize = [True, False, False, False, False, True, True]
         self.parameters = self.read_as_dict(path)
         """
         :param self.params: a dictionary mapping car's id to considered parameters
         """
 
 
-    def update_parameters(self,criteria):
+    def update_parameters(self, criteria):
         """
         Function updates parameters to understandable form for any algortihm
         It should be called after important criteria are chosen
@@ -37,7 +37,7 @@ class Cars:
         If parameter is to be maximalized, it is multiplied by -1
         :param criteria: a list speciffying if criterion is taken into account
         """ 
-
+        criteria = sorted(criteria)
         self.criteria = [True if elem in criteria else False for elem in ['Maksymalna prędkość', 'Pojemność bagażnika', 'Moc silnika', 'Pojemność silnika', 'Przebieg', 'Średnie spalanie', 'Cena']]
         for id, car in self.parameters.items():
             new_criteria = []
