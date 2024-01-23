@@ -10,11 +10,8 @@ class Ui_DatabaseScreen:
         self.centralwidget = QtWidgets.QWidget(DatabaseScreen)
         self.centralwidget.setObjectName("centralwidget")
 
-        self.baza = QtWidgets.QLabel(self.centralwidget)
-        
-
         self.table_widget = QtWidgets.QTableWidget(self.centralwidget)
-        self.table_widget.setGeometry(QtCore.QRect(0,25,781,878))
+        self.table_widget.setGeometry(QtCore.QRect(0,25,1080,850))
         self.load_excel_data()
         
         self.menu = QtWidgets.QPushButton(self.centralwidget)
@@ -22,7 +19,7 @@ class Ui_DatabaseScreen:
         self.menu.setText("Menu")
         self.menu.setObjectName("menu")
         self.menu.setStyleSheet("background-color: gray")
-        self.menu.clicked.connect(lambda: self.gui.show_main())
+        self.menu.clicked.connect(lambda: self.gotoMain())
         
         DatabaseScreen.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(DatabaseScreen)
@@ -38,7 +35,9 @@ class Ui_DatabaseScreen:
 
     def load_excel_data(self):
         try:
-            workbook = openpyxl.load_workbook("kod\\gui\\test_data_base.xlsx",data_only=True)
+            workbook = self.gui.database
+            self.gui.stacked_widget.setFixedHeight(876)
+            self.gui.stacked_widget.setFixedWidth(1080)
             self.sheet = workbook.active
             self.table_widget.setRowCount(self.sheet.max_row)
             self.table_widget.setColumnCount(self.sheet.max_column)
@@ -48,5 +47,12 @@ class Ui_DatabaseScreen:
                     item = QtWidgets.QTableWidgetItem(str(value))
                     self.table_widget.setItem(row_index, col_index, item)
 
+
+
         except Exception as e:
             print(f"Error loading Excel data: {e}")
+            
+    def gotoMain(self):
+        self.gui.stacked_widget.setFixedHeight(876)
+        self.gui.stacked_widget.setFixedWidth(783)
+        self.gui.show_main()

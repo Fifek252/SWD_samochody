@@ -1,7 +1,7 @@
 from PyQt5 import  QtWidgets
 from PyQt5.QtWidgets import QStackedWidget
 import sys
-import pandas as pd
+import openpyxl
 
 from screen import Screen
 
@@ -28,7 +28,7 @@ class Gui:
         self.stacked_widget = QStackedWidget()
         self.stacked_widget.setFixedHeight(876)
         self.stacked_widget.setFixedWidth(783)
-        self.database = pd.read_excel("kod\\gui\\test_data_base.xlsx")
+        self.database = openpyxl.load_workbook("bazadanych.xlsx",data_only=True)
 
     def show_main(self):
         window = QtWidgets.QMainWindow()
