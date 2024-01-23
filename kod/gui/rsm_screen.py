@@ -58,7 +58,7 @@ class Ui_RsmScreen:
         self.status_quo.setAlignment(QtCore.Qt.AlignTop | QtCore.Qt.AlignLeft)
         
         self.aspiracje = QtWidgets.QLabel(self.centralwidget)
-        self.aspiracje.setGeometry(QtCore.QRect(INPUT_X + 460, INPUT_Y_START+90, 220, 130))
+        self.aspiracje.setGeometry(QtCore.QRect(INPUT_X + 460, INPUT_Y_START+200, 220, 130))
         self.aspiracje.setObjectName("aspiracje")
         self.aspiracje.setText(ASPIRACJE_TEXT +"\n[]")
         self.aspiracje.setStyleSheet("color: white;")
@@ -77,7 +77,7 @@ class Ui_RsmScreen:
         self.type_info.setFont(QtGui.QFont("Arial",8))
         
         self.clear_asp = QtWidgets.QPushButton(self.centralwidget)
-        self.clear_asp.setGeometry(QtCore.QRect(INPUT_X+420,INPUT_Y_START+90,30,30))
+        self.clear_asp.setGeometry(QtCore.QRect(INPUT_X+420,INPUT_Y_START+200,30,30))
         self.clear_asp.setIcon(self.trashcan)
         self.clear_asp.setIconSize(self.trashcan.actualSize(0.8*self.clear_asp.size()))
         self.clear_asp.clicked.connect(lambda: self.clear_asp_points())
