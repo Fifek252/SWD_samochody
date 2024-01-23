@@ -1,11 +1,9 @@
 import math
 
-from car import Cars
-
 class MetodaTopsis:
 
-    def __init__(self, cars: Cars):
-        self.zbior_decyzji = cars.get_parameters()
+    def __init__(self, parameters):
+        self.zbior_decyzji = parameters
         self.zbior_decyzji_Znormalizowany = {}
         self.zbior_niezdominowany_znormalizowany = {}
         self.wspolczynniki_skorigowane = []
@@ -51,7 +49,9 @@ class MetodaTopsis:
     def wyznaczPunktIdealny(self):
         parametr_min = []
         # stworz liste punktow idealnych
-        for i in range(len(self.zbior_decyzji[1])):
+
+        pierwszy_klucz = next(iter(self.zbior_decyzji.keys()), None)
+        for i in range(len(self.zbior_decyzji[pierwszy_klucz])):
             parametr_min.append(float('inf'))
 
         # wyznacz najlepsza (najmniejsza) wartosc w kazdej kolumnie
@@ -66,7 +66,8 @@ class MetodaTopsis:
     def wyznaczPunktAntyIdealny_nadir(self):
         parametr_max = []
         # stworz liste punktow antyidealnych
-        for i in range(len(self.zbior_decyzji[1])):
+        pierwszy_klucz = next(iter(self.zbior_decyzji.keys()), None)
+        for i in range(len(self.zbior_decyzji[pierwszy_klucz])):
             parametr_max.append(float('-inf'))
 
         # wyznacz najgorsza (najwieksza) wartosc w kazdej kolumnie zbioru niezdominowanego
@@ -106,13 +107,14 @@ class MetodaTopsis:
     def normalizujZbior(self):
         suma_w_kolumnach = []
         norma = []
-        for i in range(len(self.zbior_decyzji[1])):
+        pierwszy_klucz = next(iter(self.zbior_decyzji.keys()), None)
+        for i in range(len(self.zbior_decyzji[pierwszy_klucz])):
             suma_w_kolumnach.append(0)
             norma.append(0)
 
         # sumuj kolumny
         for index, wartosc in self.zbior_decyzji.items():
-            for i in range(len(self.zbior_decyzji[1])):
+            for i in range(len(self.zbior_decyzji[pierwszy_klucz])):
                 suma_w_kolumnach[i] += (wartosc[i]**2)
 
         # oblicz norme dla kazdej kolumny
