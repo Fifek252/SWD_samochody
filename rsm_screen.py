@@ -23,9 +23,11 @@ class Point:
     def __init__(self,point : list,criteria_chosen):
         self.point = point
         self.criteria_chosen = criteria_chosen
-        print(self.criteria_chosen)
         self.minimize()
+<<<<<<< HEAD
 
+=======
+>>>>>>> b155a1cf77cda2d48fcc822a282f7763829154c8
         
     def minimize(self):
 

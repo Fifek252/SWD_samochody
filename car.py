@@ -29,7 +29,7 @@ class Cars:
         """
 
 
-    def update_parameters(self,criteria):
+    def update_parameters(self, criteria):
         """
         Function updates parameters to understandable form for any algortihm
         It should be called after important criteria are chosen
@@ -38,7 +38,9 @@ class Cars:
         :param criteria: a list speciffying if criterion is taken into account
         """ 
 
-        self.criteria = [True if elem in sorted(criteria) else False for elem in ['Maksymalna prędkość', 'Pojemność bagażnika', 'Moc silnika', 'Pojemność silnika', 'Przebieg', 'Średnie spalanie', 'Cena']]
+        criteria = sorted(criteria)
+        self.criteria = [True if elem in criteria else False for elem in sorted(['Maksymalna prędkość', 'Pojemność bagażnika', 'Moc silnika', 'Pojemność silnika', 'Przebieg', 'Średnie spalanie', 'Cena'])]
+
         for id, car in self.parameters.items():
             new_criteria = []
             for idx, crit in enumerate(car):
