@@ -12,7 +12,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from screen import Screen
 
 INPUT_X = 30
-INPUT_Y_START = ASPIRACJE_TEXT = "Aktualny zbiór punktów aspiracji: "
+INPUT_Y_START = 450
+ASPIRACJE_TEXT = "Aktualny zbiór punktów aspiracji: "
 STATUS_QUO_TEXT = "Aktualny zbiór punktów status-quo: "
 MAX_POINTS = 5
 
@@ -49,7 +50,7 @@ class Ui_RsmScreen:
         self.make_interface()
         
         self.status_quo = QtWidgets.QLabel(self.centralwidget)
-        self.status_quo.setGeometry(QtCore.QRect(INPUT_X + 460, INPUT_Y_START-50, 220, 130))
+        self.status_quo.setGeometry(QtCore.QRect(INPUT_X + 460, INPUT_Y_START+50, 220, 130))
         self.status_quo.setObjectName("status_quo")
         self.status_quo.setText(STATUS_QUO_TEXT+"\n[]")
         self.status_quo.setStyleSheet("color: white;")
@@ -65,7 +66,7 @@ class Ui_RsmScreen:
         self.aspiracje.setAlignment(QtCore.Qt.AlignTop | QtCore.Qt.AlignLeft)
         
         self.menu = QtWidgets.QPushButton(self.centralwidget)
-        self.menu.setGeometry(QtCore.QRect(20, 360, 111, 41))
+        self.menu.setGeometry(QtCore.QRect(20, 320, 111, 41))
         self.menu.setObjectName("menu_rsm")
         self.menu.clicked.connect(lambda: self.gui.show_main())
         
@@ -82,7 +83,7 @@ class Ui_RsmScreen:
         self.clear_asp.clicked.connect(lambda: self.clear_asp_points())
         
         self.clear_quo = QtWidgets.QPushButton(self.centralwidget)
-        self.clear_quo.setGeometry(QtCore.QRect(INPUT_X+420,INPUT_Y_START-50,30,30))
+        self.clear_quo.setGeometry(QtCore.QRect(INPUT_X+420,INPUT_Y_START+50,30,30))
         self.clear_quo.setIcon(self.trashcan)
         self.clear_quo.setIconSize(self.trashcan.actualSize(0.8*self.clear_quo.size()))
         self.clear_quo.clicked.connect(lambda: self.clear_quo_points())
