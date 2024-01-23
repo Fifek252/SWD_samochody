@@ -1,7 +1,7 @@
 from PyQt5 import  QtWidgets
 from PyQt5.QtWidgets import QStackedWidget
 import sys
-import pandas as pd
+import openpyxl
 
 from screen import Screen
 
@@ -11,6 +11,7 @@ from ranking_screen import Ui_RankingScreen
 from rsm_screen import Ui_RsmScreen
 from sp_screen import Ui_SpScreen
 from uta_screen import Ui_UtaScreen
+from database import Ui_DatabaseScreen
 
 class Gui:
     '''
@@ -27,7 +28,7 @@ class Gui:
         self.stacked_widget = QStackedWidget()
         self.stacked_widget.setFixedHeight(876)
         self.stacked_widget.setFixedWidth(783)
-        self.database = pd.read_excel("kod\\gui\\test_data_base.xlsx")
+        self.database = openpyxl.load_workbook("bazadanych.xlsx",data_only=True)
 
     def show_main(self):
         window = QtWidgets.QMainWindow()
@@ -67,6 +68,13 @@ class Gui:
     def show_ranking(self,method : Screen,criteria):
         window = QtWidgets.QMainWindow()
         Ui_RankingScreen(window,self,method,criteria)
+        self.stacked_widget.addWidget(window)
+        self.stacked_widget.setCurrentWidget(window)
+        self.stacked_widget.show()
+        
+    def show_database(self):
+        window = QtWidgets.QMainWindow()
+        Ui_DatabaseScreen(window,self)
         self.stacked_widget.addWidget(window)
         self.stacked_widget.setCurrentWidget(window)
         self.stacked_widget.show()

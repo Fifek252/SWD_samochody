@@ -21,7 +21,6 @@ class MetodaTopsis:
 
 
     def wyznaczZbiorNiezdominowany(self):
-
         przegladana_lista = self.zbior_decyzji.copy()
 
         for nazwa_punktu_Y, wartosc_Y in przegladana_lista.items():
@@ -59,11 +58,11 @@ class MetodaTopsis:
             parametr_min.append(float('inf'))
 
         # wyznacz najlepsza (najmniejsza) wartosc w kazdej kolumnie
+
         for value in self.zbior_decyzji_Znormalizowany.values():
             for i in range(len(parametr_min)):
                 if parametr_min[i] > value[i]:
                     parametr_min[i] = value[i]
-
         self.punkt_idealny_znormalizowany = parametr_min
 
 
@@ -78,7 +77,6 @@ class MetodaTopsis:
             for i in range(len(parametr_max)):
                 if parametr_max[i] < value[i]:
                     parametr_max[i] = value[i]
-
         self.punkt_antyidealny_znormalizowany = parametr_max
 
 
@@ -88,9 +86,7 @@ class MetodaTopsis:
         ostateczne_rozwiazanie = {}
         for result in sorted_list:
             ostateczne_rozwiazanie[result[0]] = self.zbior_decyzji[result[0]]
-
         return ostateczne_rozwiazanie
-
 
 
     def wyznaczWspolczynnikSkorigowany(self):
