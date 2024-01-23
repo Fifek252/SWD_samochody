@@ -1,0 +1,6 @@
+TITLE = "SWD wyboru samochodu"
+WINDOW_WIDTH = 600
+WINDOW_HEIGHT = 400
+THEME = "dark"
+DEFAULT_COLOR_THEME = "dark-blue"
+APPEARANCE_MODE = "dark"
