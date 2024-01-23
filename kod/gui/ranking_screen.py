@@ -10,9 +10,10 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from screen import Screen
+from gui.car import Cars
 
 class Ui_RankingScreen:
-    def __init__(self, RankingScreen,gui,method,criteria):
+    def __init__(self, RankingScreen,gui,method,criteria,database):
         self.gui = gui
         self.method = method
         self.criteria = criteria

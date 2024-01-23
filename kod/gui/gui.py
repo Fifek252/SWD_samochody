@@ -7,18 +7,21 @@ from screen import Screen
 
 from MainWindow import Ui_MainScreen
 from TopsisScreen import Ui_TopsisScreen
-from ranking_screen import Ui_RankingScreen
+from data_load import read_as_dict
+#from ranking_screen import Ui_RankingScreen
 from rsm_screen import Ui_RsmScreen
 from sp_screen import Ui_SpScreen
 from uta_screen import Ui_UtaScreen
 from database import Ui_DatabaseScreen
+from typing import Dict,Union,List
+import pandas as pd
 
 class Gui:
     '''
     klasa zarządzająca działaniem gui
     i wyświetlaniem poszczególnych ekranów
     '''
-    def __init__(self) -> None:
+    def __init__(self,database) -> None:
         '''
         inicjalizacja ekranu
         ustalenie wielkości okna
@@ -28,7 +31,7 @@ class Gui:
         self.stacked_widget = QStackedWidget()
         self.stacked_widget.setFixedHeight(876)
         self.stacked_widget.setFixedWidth(783)
-        self.database = openpyxl.load_workbook("bazadanych.xlsx",data_only=True)
+        self.database = database
 
     def show_main(self):
         window = QtWidgets.QMainWindow()
@@ -65,12 +68,12 @@ class Gui:
         self.stacked_widget.setCurrentWidget(window)
         self.stacked_widget.show()
     
-    def show_ranking(self,method : Screen,criteria):
-        window = QtWidgets.QMainWindow()
-        Ui_RankingScreen(window,self,method,criteria)
-        self.stacked_widget.addWidget(window)
-        self.stacked_widget.setCurrentWidget(window)
-        self.stacked_widget.show()
+    # def show_ranking(self,method : Screen,criteria):
+    #     window = QtWidgets.QMainWindow()
+    #     Ui_RankingScreen(window,self,method,criteria,self.database)
+    #     self.stacked_widget.addWidget(window)
+    #     self.stacked_widget.setCurrentWidget(window)
+    #     self.stacked_widget.show()
         
     def show_database(self):
         window = QtWidgets.QMainWindow()
@@ -86,6 +89,7 @@ class Gui:
         
 
 if __name__ == "__main__":
-    gui = Gui()
+    database = read_as_dict("bazadanych.xlsx")
+    gui = Gui(database)
     gui.run()
     
