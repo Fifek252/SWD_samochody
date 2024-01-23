@@ -56,7 +56,7 @@ class Ui_TopsisScreen:
         self.rownowazne.stateChanged.connect(lambda: self.make_even_weights())
         
         self.weights_text = QtWidgets.QLabel(self.centralwidget)
-        self.weights_text.setGeometry(INPUT_X+350,INPUT_Y_START,500,41)
+        self.weights_text.setGeometry(INPUT_X+300,INPUT_Y_START,500,41)
         self.weights_text.setObjectName("wprowadzone_wagi")
         self.weights_text.setStyleSheet("color: white;")
         self.weights_text.setText(f"Wagi: {self.weights}\nSuma wag: {sum(self.weights)}")
