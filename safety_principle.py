@@ -1,5 +1,4 @@
 from typing import List, Union, Dict, Tuple
-import numpy as np
 import math
 from car import Cars
 
@@ -16,14 +15,14 @@ class SP:
     Class creates ranking using RSM method
     """
 
-    def __init__(self, cars: Cars, A0: List[List[Union[float, int]]], A1: List[List[Union[float, int]]]):
+    def __init__(self, parameters, A0: List[List[Union[float, int]]], A1: List[List[Union[float, int]]]):
         """
         :param cars: set of all cars
         :param A0: set of status quo points
         :param A1: set of destination points
         """
-        self.cars = cars
-        self.U = cars.get_parameters()
+        self.cars = parameters
+        self.U = parameters
         self.a0 = A0
         self.a1 = A1
         self.waga = {}

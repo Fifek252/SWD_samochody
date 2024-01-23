@@ -2,7 +2,7 @@ import math
 
 class MetodaTopsis:
 
-    def __init__(self, parameters):
+    def __init__(self, parameters, wagi):
         self.zbior_decyzji = parameters
         self.zbior_decyzji_Znormalizowany = {}
         self.zbior_niezdominowany_znormalizowany = {}
@@ -14,6 +14,7 @@ class MetodaTopsis:
 
         self.zbior_rozwiazan = []   # indeksy rozwiazan od najlepszego do najgorszego
 
+        self.wagi = wagi
 
     def wyznaczZbiorNiezdominowany(self):
         przegladana_lista = self.zbior_decyzji.copy()
@@ -95,11 +96,11 @@ class MetodaTopsis:
 
             # odleglosc idealna
             for i in range(len(wartosc)):
-                odleglosc_idealna += (wartosc[i] - self.punkt_idealny_znormalizowany[i]) ** 2
+                odleglosc_idealna += self.wagi[i] * ((wartosc[i] - self.punkt_idealny_znormalizowany[i]) ** 2)
 
             # odleglosc antyidealna
             for i in range(len(wartosc)):
-                odleglosc_antyidealna += (wartosc[i] - self.punkt_antyidealny_znormalizowany[i]) ** 2
+                odleglosc_antyidealna += self.wagi[i] * ((wartosc[i] - self.punkt_antyidealny_znormalizowany[i]) ** 2)
 
             self.wspolczynniki_skorigowane.append([id, odleglosc_antyidealna/(odleglosc_antyidealna + odleglosc_idealna)])
 
