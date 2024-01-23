@@ -10,11 +10,8 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from screen import Screen
-import sys
-import os
-sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
-from rsm.rsm import RSM
+from rsm import RSM
 
 INPUT_X = 30
 INPUT_Y_START = 450
@@ -280,6 +277,6 @@ class Ui_RsmScreen:
         self.status_quo.setText(STATUS_QUO_TEXT +"\n[]")
         
     def do_rsm(self):
-        self.gui.database.update_parameters()
+        self.gui.database.update_parameters(self.criteria)
         self.ranking = RSM(self.gui.database,self.quo_points,self.asp_points)
-        print(self.ranking)
+        print(self.ranking.get_rank())
