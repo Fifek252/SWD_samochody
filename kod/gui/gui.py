@@ -16,6 +16,12 @@ from typing import Dict,Union,List
 import pandas as pd
 from car import Cars
 
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
+import gui.car
+import topsis.topsis
+
 class Gui:
     '''
     klasa zarządzająca działaniem gui
@@ -89,7 +95,7 @@ class Gui:
         
 
 if __name__ == "__main__":
-    database = Cars("bazadanych.xlsx",[False,True,False,False,True,True,False,False])
-    gui = Gui(database)
-    gui.run()
+
+    # gui = Gui(database)
+    # gui.run()
     
