@@ -11,6 +11,7 @@ from ranking_screen import Ui_RankingScreen
 from rsm_screen import Ui_RsmScreen
 from sp_screen import Ui_SpScreen
 from uta_screen import Ui_UtaScreen
+from database import Ui_DatabaseScreen
 
 class Gui:
     '''
@@ -67,6 +68,13 @@ class Gui:
     def show_ranking(self,method : Screen,criteria):
         window = QtWidgets.QMainWindow()
         Ui_RankingScreen(window,self,method,criteria)
+        self.stacked_widget.addWidget(window)
+        self.stacked_widget.setCurrentWidget(window)
+        self.stacked_widget.show()
+        
+    def show_database(self):
+        window = QtWidgets.QMainWindow()
+        Ui_DatabaseScreen(window,self)
         self.stacked_widget.addWidget(window)
         self.stacked_widget.setCurrentWidget(window)
         self.stacked_widget.show()

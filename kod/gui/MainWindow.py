@@ -81,7 +81,7 @@ class Ui_MainScreen:
         self.pokaz_baze = QtWidgets.QPushButton(self.centralwidget)
         self.pokaz_baze.setGeometry(QtCore.QRect(310, 800, 151, 28))
         self.pokaz_baze.setObjectName("pokaz_baze")
-        self.pokaz_baze.clicked.connect(lambda: print(self.gui.database))
+        self.pokaz_baze.clicked.connect(lambda: self.gui.show_database())
         
         self.przebieg = QtWidgets.QCheckBox(self.centralwidget)
         self.przebieg.setGeometry(QtCore.QRect(20, 810, 81, 20))
