@@ -1,8 +1,6 @@
 from typing import List, Union, Tuple, Dict
 import numpy as np
 from math import inf
-import sys
-import os
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
@@ -37,55 +35,8 @@ class UTA:
                         rank[-(j+1)] = rank[-(j+2)]
                     rank[i] = (key, val)
                     break
-        return {id: self.cars.get_all_parameters()[id] for id, val in reversed(rank) if id is not None}
-
-    def __get_scores(self) -> Dict[int, float]:
-        """
-        Function calculates score function for each car
-        :return: dictionary mapping car's id to its score function value
-        """
-        params = self.cars.get_parameters()
-        n = 0
-        for key in params.keys():
-            n = len(params[key])
-            break
-
-        gi = [inf for _ in range(n)]
-        ga = [0 for _ in range(n)]
-
-        for val in params.values():
-            for i in range(n):
-                if val[i] < gi[i]:
-                    gi[i] = val[i]
-                if val[i] > ga[i]:
-                    ga[i] = val[i]
-
-        scores = {}
-
-        for key, val in params.items():
-            score = 0
-            for i, x in enumerate(val):
-                diff = abs(ga[i] - gi[i])
-                x_norm = (x-gi[i])/diff
-                coeffs = self.ch_coeffs
-                if x_norm < 0:
-                    x_norm = abs(x_norm)
-                    coeffs = coeffs.reversed()
-
-                x0 = 0
-                y0 = 1
-                x1 = 0
-                y1 = 1
-                l = len(coeffs)
-
-                for c in coeffs:
-                    x0 = x1
-                    x1 += 1/l
-                    y0 = y1
-                    y1 = c
-                    if x_norm <= x1:
-                        break
             
+
                 a = (x0-x1)/(y0-y1)
                 b = y0-a*x0
                 score += (a*x_norm + b)/l
@@ -119,5 +70,8 @@ print(solver.get_rank())
 
 
 
-
+            return (a*x_norm + b)/4
+        
+        for m, var in enumerate(Uc):
+            Uglobal[m] += uFunN(var)
 
