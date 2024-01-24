@@ -13,7 +13,7 @@ from screen import Screen
 from safety_principle import SP
 
 INPUT_X = 30
-INPUT_Y_START = 450
+INPUT_Y_START = 400
 ASPIRACJE_TEXT = "Aktualny zbiór punktów aspiracji: "
 STATUS_QUO_TEXT = "Aktualny zbiór punktów status-quo: "
 MAX_POINTS = 5
@@ -52,7 +52,7 @@ class Ui_SpScreen:
         self.background.setObjectName("background")
         
         self.tytul = QtWidgets.QLabel(self.centralwidget)
-        self.tytul.setGeometry(QtCore.QRect(180, 350, 421, 61))
+        self.tytul.setGeometry(QtCore.QRect(180, 300, 421, 61))
         self.tytul.setStyleSheet("border-color: rgb(159, 255, 124);")
         self.tytul.setObjectName("tytul")
         
@@ -76,12 +76,12 @@ class Ui_SpScreen:
         self.aspiracje.setAlignment(QtCore.Qt.AlignTop | QtCore.Qt.AlignLeft)
         
         self.menu = QtWidgets.QPushButton(self.centralwidget)
-        self.menu.setGeometry(QtCore.QRect(20, 320, 111, 41))
+        self.menu.setGeometry(QtCore.QRect(20, 270, 111, 41))
         self.menu.setObjectName("menu_rsm")
         self.menu.clicked.connect(lambda: self.gui.show_main())
         
         self.type_info = QtWidgets.QLabel(self.centralwidget)
-        self.type_info.setGeometry(INPUT_X+70,INPUT_Y_START-50,140,20)
+        self.type_info.setGeometry(INPUT_X+70,INPUT_Y_START-55,140,20)
         self.type_info.setText("Utwórz punkt:")
         self.type_info.setStyleSheet("color: white;")
         self.type_info.setFont(QtGui.QFont("Arial",8))
@@ -242,7 +242,7 @@ class Ui_SpScreen:
             point = Point(self.asp_list,self.criteria)
             self.asp_points.append(point.get_point())
             self.asp_list = [0 for _ in self.criteria]
-            self.aspiracje.setText(ASPIRACJE_TEXT + '\n'+ '\n'.join(map(str,self.asp_points)))
+            self.aspiracje.setText(ASPIRACJE_TEXT + '\n' + '\n'.join([' '.join(map(str, [abs(value) for value in sublist])) for sublist in self.asp_points]))
             for text_edit in self.inputs:
                 text_edit.setStyleSheet("background-color: #ffffff;")
                 text_edit.clear()
@@ -253,7 +253,7 @@ class Ui_SpScreen:
             point = Point(self.quo_list,self.criteria)
             self.quo_points.append(point.get_point())
             self.quo_list = [0 for _ in self.criteria]
-            self.status_quo.setText(ASPIRACJE_TEXT + '\n'+ '\n'.join(map(str,self.quo_points)))
+            self.status_quo.setText(ASPIRACJE_TEXT + '\n' + '\n'.join([' '.join(map(str, [abs(value) for value in sublist])) for sublist in self.quo_points]))
             for text_edit in self.inputs:
                 text_edit.setStyleSheet("background-color: #ffffff;")
                 text_edit.clear()

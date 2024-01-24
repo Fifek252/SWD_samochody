@@ -14,7 +14,7 @@ from screen import Screen
 from rsm import RSM
 
 INPUT_X = 30
-INPUT_Y_START = 450
+INPUT_Y_START = 400
 ASPIRACJE_TEXT = "Aktualny zbiór punktów aspiracji: "
 STATUS_QUO_TEXT = "Aktualny zbiór punktów status-quo: "
 MAX_POINTS = 5
