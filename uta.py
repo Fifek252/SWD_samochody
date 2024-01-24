@@ -4,8 +4,8 @@ from math import inf
 
 from car import Cars
 
-""" _____________
-|  ________  |    o   o
+""" ___________
+|  ______  |    o   o
 | |  |____|  |    \__/
 | |__________|____\ /
 |__________________/
@@ -67,6 +67,8 @@ class UTA:
                 if x_norm < 0:
                     x_norm = abs(x_norm)
                     coeffs = coeffs.reversed()
+                    coeffs.pop(0)
+                    coeffs.append(0)
 
                 x0 = 0
                 y0 = 1
@@ -81,10 +83,9 @@ class UTA:
                     y1 = c
                     if x_norm <= x1:
                         break
-            
+                
                 a = (x0-x1)/(y0-y1)
                 b = y0-a*x0
                 score += (a*x_norm + b)/l
             scores[key] = score
         return scores
-

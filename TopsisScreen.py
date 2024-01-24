@@ -42,7 +42,7 @@ class Ui_TopsisScreen:
         self.info_topsis.setObjectName("info_topsis")
 
         self.menu = QtWidgets.QPushButton(self.centralwidget)
-        self.menu.setGeometry(QtCore.QRect(20, 400, 111, 41))
+        self.menu.setGeometry(QtCore.QRect(20, 360, 111, 41))
         self.menu.setObjectName("menu")
         self.menu.clicked.connect(lambda: self.gui.show_main())
         
@@ -69,7 +69,7 @@ class Ui_TopsisScreen:
         font = QtGui.QFont("Arial",10)
         font.setBold(True)
         self.search.setFont(font)
-        self.search.clicked.connect(lambda: self.go_to_ranking())
+        self.search.clicked.connect(lambda: self.do_topsis())
         
         TopsisScreen.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(TopsisScreen)
@@ -87,7 +87,6 @@ class Ui_TopsisScreen:
         _translate = QtCore.QCoreApplication.translate
         TopsisScreen.setWindowTitle(_translate("TopsisScreen", "TopsisScreen"))
         self.tytul_topsis.setText(_translate("TopsisScreen", "<html><head/><body><p align=\"center\"><span style=\" font-size:20pt; font-weight:600; color:#ffffff;\">Metoda Topsis</span></p><p align=\"center\"><br/></p></body></html>"))
-        self.info_topsis.setText(_translate("TopsisScreen", "<html><head/><body><p align=\"center\"><span style=\" font-weight:600; color:#ffffff;\">Proszę nadać wagi wybranym kryteriom. Wagi muszą mieć łączną sumę 1!!!.<br/>Można też wybrać opcję, aby kryteria były równoważne.</span></p></body></html>"))
         self.menu.setText(_translate("TopsisScreen", "Menu"))
    
     def make_interface(self):
@@ -190,18 +189,14 @@ class Ui_TopsisScreen:
 
     def go_to_ranking(self):
         if self.sum_weights == 1 and 0 not in self.weights:
-            self.gui.show_ranking(Screen.TOPSIS,self.criteria)
+            self.gui.show_ranking(Screen.TOPSIS,self.criteria,self.ranking)
         elif self.sum_weights != 1:
             self.error_sum("Suma wag kryteriów musi wynosić 1,\naby można było zastosować metodę topsis")
         elif 0 in self.weights:
             self.error_sum("Proszę nadać niezerową wagę wszystkim wybranym kryteriom.\nW celu usunięcia kryterium można wrócić do Menu.")
             
-
-# if __name__ == "__main__":
-#     import sys
-#     app = QtWidgets.QApplication(sys.argv)
-#     TopsisScreen = QtWidgets.QWidget()
-#     ui = Ui_TopsisScreen()
-#     ui.setupUi(TopsisScreen)
-#     TopsisScreen.show()
-#     sys.exit(app.exec_())
+    def do_topsis(self):
+        self.gui.database.update_parameters(self.criteria)
+        self.ranking = MetodaTopsis(self.gui.database.get_parameters(),self.weights)
+        self.ranking = self.ranking.run_algorithm()
+        self.go_to_ranking()

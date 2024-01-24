@@ -10,6 +10,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from screen import Screen
+from safety_principle import SP
 
 INPUT_X = 30
 INPUT_Y_START = 450
@@ -18,8 +19,17 @@ STATUS_QUO_TEXT = "Aktualny zbiór punktów status-quo: "
 MAX_POINTS = 5
 
 class Point:
-    def __init__(self,point : list):
+    def __init__(self,point : list,criteria_chosen):
         self.point = point
+        self.criteria_chosen = criteria_chosen
+        self.minimize()
+        
+    def minimize(self):
+
+        for idx,val in enumerate(self.point):
+            if self.criteria_chosen[idx]  in ['Maksymalna prędkość', 'Pojemność bagażnika', 'Moc silnika', 'Pojemność silnika']:
+                self.point[idx] = -val
+                
     def get_point(self):
         return self.point
 
@@ -50,7 +60,7 @@ class Ui_SpScreen:
         self.make_interface()
         
         self.status_quo = QtWidgets.QLabel(self.centralwidget)
-        self.status_quo.setGeometry(QtCore.QRect(INPUT_X + 460, INPUT_Y_START+50, 220, 130))
+        self.status_quo.setGeometry(QtCore.QRect(INPUT_X + 370, INPUT_Y_START+50, 300, 130))
         self.status_quo.setObjectName("status_quo")
         self.status_quo.setText(STATUS_QUO_TEXT+"\n[]")
         self.status_quo.setStyleSheet("color: white;")
@@ -58,7 +68,7 @@ class Ui_SpScreen:
         self.status_quo.setAlignment(QtCore.Qt.AlignTop | QtCore.Qt.AlignLeft)
         
         self.aspiracje = QtWidgets.QLabel(self.centralwidget)
-        self.aspiracje.setGeometry(QtCore.QRect(INPUT_X + 460, INPUT_Y_START+200, 220, 130))
+        self.aspiracje.setGeometry(QtCore.QRect(INPUT_X + 370, INPUT_Y_START+200, 300, 130))
         self.aspiracje.setObjectName("aspiracje")
         self.aspiracje.setText(ASPIRACJE_TEXT +"\n[]")
         self.aspiracje.setStyleSheet("color: white;")
@@ -71,19 +81,19 @@ class Ui_SpScreen:
         self.menu.clicked.connect(lambda: self.gui.show_main())
         
         self.type_info = QtWidgets.QLabel(self.centralwidget)
-        self.type_info.setGeometry(INPUT_X+70,INPUT_Y_START-75,140,20)
+        self.type_info.setGeometry(INPUT_X+70,INPUT_Y_START-50,140,20)
         self.type_info.setText("Utwórz punkt:")
         self.type_info.setStyleSheet("color: white;")
         self.type_info.setFont(QtGui.QFont("Arial",8))
         
         self.clear_asp = QtWidgets.QPushButton(self.centralwidget)
-        self.clear_asp.setGeometry(QtCore.QRect(INPUT_X+420,INPUT_Y_START+200,30,30))
+        self.clear_asp.setGeometry(QtCore.QRect(INPUT_X+330,INPUT_Y_START+200,30,30))
         self.clear_asp.setIcon(self.trashcan)
         self.clear_asp.setIconSize(self.trashcan.actualSize(0.8*self.clear_asp.size()))
         self.clear_asp.clicked.connect(lambda: self.clear_asp_points())
         
         self.clear_quo = QtWidgets.QPushButton(self.centralwidget)
-        self.clear_quo.setGeometry(QtCore.QRect(INPUT_X+420,INPUT_Y_START+50,30,30))
+        self.clear_quo.setGeometry(QtCore.QRect(INPUT_X+330,INPUT_Y_START+50,30,30))
         self.clear_quo.setIcon(self.trashcan)
         self.clear_quo.setIconSize(self.trashcan.actualSize(0.8*self.clear_quo.size()))
         self.clear_quo.clicked.connect(lambda: self.clear_quo_points())
@@ -116,14 +126,14 @@ class Ui_SpScreen:
         self.crits = []
 
         self.asp_checkbox = QtWidgets.QCheckBox(self.centralwidget)
-        self.asp_checkbox.setGeometry(QtCore.QRect(INPUT_X,INPUT_Y_START-50,140,41))
+        self.asp_checkbox.setGeometry(QtCore.QRect(INPUT_X,INPUT_Y_START-30,140,41))
         self.asp_checkbox.setObjectName("asp_checkbox")
         self.asp_checkbox.setText("Aspiracji")
         self.asp_checkbox.setStyleSheet("color: yellow;")
         self.asp_checkbox.stateChanged.connect(lambda: self.switch_aspiration())
         
         self.quo_checkbox = QtWidgets.QCheckBox(self.centralwidget)
-        self.quo_checkbox.setGeometry(QtCore.QRect(INPUT_X+140,INPUT_Y_START-50,140,41))
+        self.quo_checkbox.setGeometry(QtCore.QRect(INPUT_X+140,INPUT_Y_START-30,140,41))
         self.quo_checkbox.setObjectName("quo_checkbox")
         self.quo_checkbox.setText("Status-quo")
         self.quo_checkbox.setStyleSheet("color: yellow;")
@@ -135,19 +145,19 @@ class Ui_SpScreen:
         font = QtGui.QFont("Arial",10)
         font.setBold(True)
         self.search.setFont(font)
-        self.search.clicked.connect(lambda: self.go_to_ranking())
+        self.search.clicked.connect(lambda: self.do_sp())
         
         self.enter_idx = 1
         for i,crit in enumerate(sorted(self.criteria)):
             crit_label = QtWidgets.QLabel(self.centralwidget)
-            crit_label.setGeometry(QtCore.QRect(INPUT_X, INPUT_Y_START+i*50, 140, 41))
+            crit_label.setGeometry(QtCore.QRect(INPUT_X, INPUT_Y_START+i*50 + 30, 140, 41))
             crit_label.setObjectName(crit)
             crit_label.setText(f"{crit}:")
             crit_label.setStyleSheet("color: white;")
             self.crits.append(crit_label)
             
             input = QtWidgets.QLineEdit(self.centralwidget)
-            input.setGeometry(QtCore.QRect(INPUT_X+150,INPUT_Y_START+i*50,100,40))
+            input.setGeometry(QtCore.QRect(INPUT_X+150,INPUT_Y_START+i*50 + 30,100,40))
             input.setObjectName(f"weight_{crit}")
             input.setStyleSheet("color: black;")
             input.setFont(QtGui.QFont("Arial",12))
@@ -159,7 +169,7 @@ class Ui_SpScreen:
             self.enter_idx += 1
             
         self.enter = QtWidgets.QPushButton(self.centralwidget)
-        self.enter.setGeometry(QtCore.QRect(INPUT_X+70,INPUT_Y_START+self.enter_idx*50-30,101,28))
+        self.enter.setGeometry(QtCore.QRect(INPUT_X+70,INPUT_Y_START+self.enter_idx*50,101,28))
         self.enter.setObjectName("enter")
         self.enter.setText("Wprowadż")
         self.enter.clicked.connect(lambda: self.create_point())
@@ -229,7 +239,7 @@ class Ui_SpScreen:
     def update_aspiration_points(self,idx,input):
         self.asp_list[idx] = input
         if  0 not in self.asp_list and len(self.asp_points) < MAX_POINTS:
-            point = Point(self.asp_list)
+            point = Point(self.asp_list,self.criteria)
             self.asp_points.append(point.get_point())
             self.asp_list = [0 for _ in self.criteria]
             self.aspiracje.setText(ASPIRACJE_TEXT + '\n'+ '\n'.join(map(str,self.asp_points)))
@@ -240,7 +250,7 @@ class Ui_SpScreen:
     def update_status_quo_points(self,idx,input):
         self.quo_list[idx] = input
         if  0 not in self.quo_list and len(self.quo_points) < MAX_POINTS:
-            point = Point(self.quo_list)
+            point = Point(self.quo_list,self.criteria)
             self.quo_points.append(point.get_point())
             self.quo_list = [0 for _ in self.criteria]
             self.status_quo.setText(ASPIRACJE_TEXT + '\n'+ '\n'.join(map(str,self.quo_points)))
@@ -270,7 +280,12 @@ class Ui_SpScreen:
 
     def go_to_ranking(self):
         if len(self.asp_points) >= 1 and len(self.quo_points) >= 1:
-            self.gui.show_ranking(Screen.SP,self.criteria)
+            self.gui.show_ranking(Screen.SP,self.criteria,self.ranking)
         else:
             self.error_zero_points()
     
+    def do_sp(self):
+        self.gui.database.update_parameters(self.criteria)
+        self.ranking = SP(self.gui.database.get_parameters(),self.quo_points,self.asp_points)
+        self.ranking = self.ranking.get_rank()
+        self.go_to_ranking()

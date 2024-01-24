@@ -53,7 +53,7 @@ class Ui_RsmScreen:
         self.background.setObjectName("background")
         
         self.tytul = QtWidgets.QLabel(self.centralwidget)
-        self.tytul.setGeometry(QtCore.QRect(180, 400, 421, 61))
+        self.tytul.setGeometry(QtCore.QRect(180, 320, 421, 61))
         self.tytul.setStyleSheet("border-color: rgb(159, 255, 124);")
         self.tytul.setObjectName("tytul")
         
@@ -61,7 +61,7 @@ class Ui_RsmScreen:
         self.make_interface()
         
         self.status_quo = QtWidgets.QLabel(self.centralwidget)
-        self.status_quo.setGeometry(QtCore.QRect(INPUT_X + 460, INPUT_Y_START+50, 220, 130))
+        self.status_quo.setGeometry(QtCore.QRect(INPUT_X + 370, INPUT_Y_START+50, 300, 130))
         self.status_quo.setObjectName("status_quo")
         self.status_quo.setText(STATUS_QUO_TEXT+"\n[]")
         self.status_quo.setStyleSheet("color: white;")
@@ -69,7 +69,7 @@ class Ui_RsmScreen:
         self.status_quo.setAlignment(QtCore.Qt.AlignTop | QtCore.Qt.AlignLeft)
         
         self.aspiracje = QtWidgets.QLabel(self.centralwidget)
-        self.aspiracje.setGeometry(QtCore.QRect(INPUT_X + 460, INPUT_Y_START+200, 220, 130))
+        self.aspiracje.setGeometry(QtCore.QRect(INPUT_X + 370, INPUT_Y_START+200, 300, 130))
         self.aspiracje.setObjectName("aspiracje")
         self.aspiracje.setText(ASPIRACJE_TEXT +"\n[]")
         self.aspiracje.setStyleSheet("color: white;")
@@ -77,24 +77,24 @@ class Ui_RsmScreen:
         self.aspiracje.setAlignment(QtCore.Qt.AlignTop | QtCore.Qt.AlignLeft)
         
         self.menu = QtWidgets.QPushButton(self.centralwidget)
-        self.menu.setGeometry(QtCore.QRect(20, 320, 111, 41))
+        self.menu.setGeometry(QtCore.QRect(20, 280, 111, 41))
         self.menu.setObjectName("menu_rsm")
         self.menu.clicked.connect(lambda: self.gui.show_main())
         
         self.type_info = QtWidgets.QLabel(self.centralwidget)
-        self.type_info.setGeometry(INPUT_X+70,INPUT_Y_START-75,140,20)
+        self.type_info.setGeometry(INPUT_X+70,INPUT_Y_START-70,140,20)
         self.type_info.setText("Utwórz punkt:")
         self.type_info.setStyleSheet("color: white;")
         self.type_info.setFont(QtGui.QFont("Arial",8))
         
         self.clear_asp = QtWidgets.QPushButton(self.centralwidget)
-        self.clear_asp.setGeometry(QtCore.QRect(INPUT_X+420,INPUT_Y_START+200,30,30))
+        self.clear_asp.setGeometry(QtCore.QRect(INPUT_X+330,INPUT_Y_START+200,30,30))
         self.clear_asp.setIcon(self.trashcan)
         self.clear_asp.setIconSize(self.trashcan.actualSize(0.8*self.clear_asp.size()))
         self.clear_asp.clicked.connect(lambda: self.clear_asp_points())
         
         self.clear_quo = QtWidgets.QPushButton(self.centralwidget)
-        self.clear_quo.setGeometry(QtCore.QRect(INPUT_X+420,INPUT_Y_START+50,30,30))
+        self.clear_quo.setGeometry(QtCore.QRect(INPUT_X+330,INPUT_Y_START+50,30,30))
         self.clear_quo.setIcon(self.trashcan)
         self.clear_quo.setIconSize(self.trashcan.actualSize(0.8*self.clear_quo.size()))
         self.clear_quo.clicked.connect(lambda: self.clear_quo_points())
@@ -273,7 +273,7 @@ class Ui_RsmScreen:
 
     def go_to_ranking(self):
         if len(self.asp_points) >= 1 and len(self.quo_points) >= 1:
-            self.gui.show_ranking(Screen.RSM,self.criteria)
+            self.gui.show_ranking(Screen.RSM,self.criteria,self.ranking)
         else:
             self.error_zero_points()
     
@@ -288,4 +288,5 @@ class Ui_RsmScreen:
     def do_rsm(self):
         self.gui.database.update_parameters(self.criteria)
         self.ranking = RSM(self.gui.database,self.quo_points,self.asp_points)
-        print(self.ranking.get_rank())
+        self.ranking = self.ranking.get_rank()
+        self.go_to_ranking()

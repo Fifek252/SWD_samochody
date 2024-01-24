@@ -22,7 +22,7 @@ class Ui_UtaScreen:
         self.background.setObjectName("background")
         
         self.tytul = QtWidgets.QLabel(self.centralwidget)
-        self.tytul.setGeometry(QtCore.QRect(180, 400, 421, 61))
+        self.tytul.setGeometry(QtCore.QRect(180, 100, 421, 61))
         self.tytul.setStyleSheet("border-color: rgb(159, 255, 124);")
         self.tytul.setObjectName("tytul")
         
@@ -201,7 +201,7 @@ class Ui_UtaScreen:
         for lst in self.final_usefulness:
             first_row_sum += lst[0]
         if first_row_sum == 1:
-            self.gui.show_ranking(Screen.UTA,self.criteria)
+            self.gui.show_ranking(Screen.UTA,self.criteria,self.ranking)
         else:
             self.error_first_row_sum()
             return
@@ -211,11 +211,10 @@ class Ui_UtaScreen:
         usefulness_values = []
         for row in range(len(self.usefulness_fcn)):
             usefulness_row = []
-            for col in range(len(row)):
-                usefulness_row.append(int(self.usefulness_fcn[row][col].text()))
+            for col in range(len(self.usefulness_fcn[row])):
+                usefulness_row.append(float(self.usefulness_fcn[row][col].text()))
             usefulness_values.append(usefulness_row)
         
         self.ranking = UTA(self.gui.database,usefulness_values)
-        print(self.ranking.get_rank())
-        
-    
+        self.ranking = self.ranking.get_rank()
+        self.go_to_ranking()

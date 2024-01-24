@@ -19,11 +19,10 @@ from safety_principle import SP
 from uta import UTA
 
 class Ui_RankingScreen:
-    def __init__(self, RankingScreen,gui,method,criteria):
+    def __init__(self, RankingScreen,gui,method,criteria,ranking):
         self.gui = gui
         self.method = method
         self.criteria = criteria
-        self.ranking = []
         self.show_nr = 10                   # Pokaż tyle aut z czołówki rankingu
         
         RankingScreen.setObjectName("RankingScreen")
@@ -34,12 +33,12 @@ class Ui_RankingScreen:
         self.background = QtWidgets.QLabel(self.centralwidget)
         self.background.setGeometry(QtCore.QRect(0, 0, 801, 881))
         self.background.setText("")
-        self.background.setPixmap(QtGui.QPixmap("kod\\gui\\background.jpg"))
+        self.background.setPixmap(QtGui.QPixmap("background.jpg"))
         self.background.setScaledContents(True)
         self.background.setObjectName("label")
         
         self.tytul = QtWidgets.QLabel(self.centralwidget)
-        self.tytul.setGeometry(QtCore.QRect(170, 390, 421, 61))
+        self.tytul.setGeometry(QtCore.QRect(170, 50, 421, 61))
         self.tytul.setStyleSheet("border-color: rgb(159, 255, 124);")
         self.tytul.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.tytul.setObjectName("tytul")
@@ -71,27 +70,14 @@ class Ui_RankingScreen:
         self.return_btn.setText("Powrót")
         self.return_btn.clicked.connect(lambda: self.back_to_method())
         
-        ''' Teraz kod zależny od tego, z jakiego ekranu przychodzimy, czyli którą metodę wybraliśmy
-        Na razie zrobiłem tylko dla topsis, i to nic nie liczy tylko printuje 10 pierwszych rzeczy z tej bazy'''
-        # if self.method == Screen.TOPSIS:
-        #     for _,row in self.gui.database.head(self.show_nr).iterrows():
-        #         self.ranking.append(row.tolist())
-        #     self.display_ranking()
-            
-        if self.method == Screen.RSM:
-            for _,row in self.gui.database.head(self.show_nr).iterrows():
-                self.ranking.append(row.tolist())
-            self.display_ranking()
+        formatted_text = "\n".join(f"{key}: {', '.join(map(str, values))}" for key, values in ranking.items())
+        self.ranking_label = QtWidgets.QLabel(self.centralwidget)
+        self.ranking_label.setText(formatted_text)
+        self.ranking_label.setGeometry(200,100,600,800)
+        self.ranking_label.setStyleSheet("color: white;")
         
-        # elif self.method == Screen.SP:
-        #     for _,row in self.gui.database.head(self.show_nr).iterrows():
-        #         self.ranking.append(row.tolist())
-        #     self.display_ranking()
         
-        # elif self.method == Screen.UTA:
-        #     for _,row in self.gui.database.head(self.show_nr).iterrows():
-        #         self.ranking.append(row.tolist())
-        #     self.display_ranking()
+        
         
 
         self.retranslateUi(RankingScreen)

@@ -1,5 +1,4 @@
 from typing import List, Union, Dict, Tuple
-import numpy as np
 import math
 from car import Cars
 
@@ -16,14 +15,14 @@ class SP:
     Class creates ranking using RSM method
     """
 
-    def __init__(self, cars: Cars, A0: List[List[Union[float, int]]], A1: List[List[Union[float, int]]]):
+    def __init__(self, parameters, A0: List[List[Union[float, int]]], A1: List[List[Union[float, int]]]):
         """
         :param cars: set of all cars
         :param A0: set of status quo points
         :param A1: set of destination points
         """
-        self.cars = cars
-        self.U = cars.get_parameters()
+        self.cars = parameters
+        self.U = parameters
         self.a0 = A0
         self.a1 = A1
         self.waga = {}
@@ -84,9 +83,10 @@ class SP:
 
         self.a0 = self.__naiveOWDfilterA(self.a0)
         self.a1 = self.__naiveOWDfilterA(self.a1)
+
         self.__naiveOWDfilterU()
 
-        self.__consistent_classes()
+        #self.__consistent_classes()
 
         wyznaczone_punkty = self.wyznaczKrzywaSzkieletowa(self.a0[0], self.a1[0])
         self.oblicz_wage(wyznaczone_punkty)
@@ -220,9 +220,9 @@ class SP:
             A1c = self.a1
             A0c = [p0 for p0 in self.a0 if all(all(i <= j for i, j in zip(p1, p0)) for p1 in self.a1)]
 
-        Uc = {k: v for k, v in self.U.items() if any(all(i <= j for i, j in zip(v, p0)) for p0 in self.a0) or
-              any(all(i >= j for i, j in zip(v, p1)) for p1 in self.a1)}
-
+        Uc = {k: v for k, v in self.U.items() if any(all(i <= j for i, j in zip(v, p0)) for p0 in self.a0) and
+            any(all(i >= j for i, j in zip(v, p1)) for p1 in self.a1)}
+        
         self.U = Uc
         self.a0 = A0c
         self.a1 = A1c
@@ -269,17 +269,3 @@ class SP:
         return ostateczne_rozwiazanie
 
 
-if __name__ == '__main__':
-    A0 = [[3, 5, 7, 6]]
-    A1 = [[1, 1, 1, 1]]
-    X = { 1: [2, 1, 2, 3],
-           3: [1, 1, 5, 4],
-           5: [1, 3, 1, 5],
-           10: [1, 1, 3, 4],
-           11: [1, 1, 5, 2]}
-
-    test_base = Cars(X, [True, True, True, True])
-    test_base.update_parameters([True, True, True, True])
-
-    solver = RSM(test_base, A0, A1)
-    print(solver.get_rank())
