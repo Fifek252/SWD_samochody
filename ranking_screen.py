@@ -70,7 +70,7 @@ class Ui_RankingScreen:
         self.return_btn.setText("Powrót")
         self.return_btn.clicked.connect(lambda: self.back_to_method())
         
-        formatted_text = "\n".join(f"{key}: {', '.join(map(str, values))}" for key, values in ranking.items())
+        formatted_text = "\n".join(f"{key}: {', '.join(map(str, map(abs, values)))}" for key, values in ranking.items())
         self.ranking_label = QtWidgets.QLabel(self.centralwidget)
         self.ranking_label.setText(formatted_text)
         self.ranking_label.setGeometry(200,100,600,800)

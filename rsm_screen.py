@@ -243,7 +243,7 @@ class Ui_RsmScreen:
             point = Point(self.asp_list,self.criteria)
             self.asp_points.append(point.get_point())
             self.asp_list = [0 for _ in self.criteria]
-            self.aspiracje.setText(ASPIRACJE_TEXT + '\n'+ '\n'.join(map(str,self.asp_points)))
+            self.aspiracje.setText(ASPIRACJE_TEXT + '\n' + '\n'.join([' '.join(map(str, [abs(value) for value in sublist])) for sublist in self.asp_points]))
             for text_edit in self.inputs:
                 text_edit.setStyleSheet("background-color: #ffffff;")
                 text_edit.clear()
@@ -254,7 +254,7 @@ class Ui_RsmScreen:
             point = Point(self.quo_list,self.criteria)
             self.quo_points.append(point.get_point())
             self.quo_list = [0 for _ in self.criteria]
-            self.status_quo.setText(STATUS_QUO_TEXT + '\n'+ '\n'.join(map(str,self.quo_points)))
+            self.status_quo.setText(STATUS_QUO_TEXT + '\n' + '\n'.join([' '.join(map(str, [abs(value) for value in sublist])) for sublist in self.quo_points]))
             for text_edit in self.inputs:
                 text_edit.setStyleSheet("background-color: #ffffff;")
                 text_edit.clear()
