@@ -169,12 +169,7 @@ class Ui_UtaScreen:
         msg.setText("Liczba przedziałów musi być liczbą naturalną dodatnią.")
         msg.setIcon(QtWidgets.QMessageBox.Critical)
         msg.exec_()
-    
-    def error_first_row_sum(self):
-        msg = QtWidgets.QMessageBox()
-        msg.setText("Suma wartości z pierwszego rzędu musi wynosić 1.")
-        msg.setIcon(QtWidgets.QMessageBox.Critical)
-        msg.exec_()
+
     
     def error_give_all_inputs(self):
         msg = QtWidgets.QMessageBox()
@@ -202,15 +197,7 @@ class Ui_UtaScreen:
                 self.error_give_all_inputs()
                 return
             
-        first_row_sum = 0
-        for lst in self.final_usefulness:
-            first_row_sum += lst[0]
-        
-        if round(first_row_sum,1) == 1:
-            self.gui.show_ranking(Screen.UTA,self.criteria,self.ranking)
-        else:
-            self.error_first_row_sum()
-            return
+        self.gui.show_ranking(Screen.UTA,self.criteria,self.ranking)
         
     def do_uta(self):
         self.gui.database.update_parameters(self.criteria)
