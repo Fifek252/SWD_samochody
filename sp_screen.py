@@ -278,14 +278,14 @@ class Ui_SpScreen:
         self.quo_points.clear()
         self.status_quo.setText(STATUS_QUO_TEXT +"\n[]")
 
-    def go_to_ranking(self):
-        if len(self.asp_points) >= 1 and len(self.quo_points) >= 1:
-            self.gui.show_ranking(Screen.SP,self.criteria,self.ranking)
-        else:
-            self.error_zero_points()
+
     
     def do_sp(self):
+        if not(len(self.asp_points) >= 1 and len(self.quo_points) >= 1):
+            self.error_zero_points()
+            return
         self.gui.database.update_parameters(self.criteria)
         self.ranking = SP(self.gui.database.get_parameters(),self.quo_points,self.asp_points)
         self.ranking = self.ranking.get_rank()
-        self.go_to_ranking()
+        if self.ranking is not None:
+            self.gui.show_ranking(Screen.SP,self.criteria,self.ranking)

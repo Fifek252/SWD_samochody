@@ -196,7 +196,14 @@ class Ui_TopsisScreen:
             self.error_sum("Proszę nadać niezerową wagę wszystkim wybranym kryteriom.\nW celu usunięcia kryterium można wrócić do Menu.")
             
     def do_topsis(self):
+        if self.sum_weights != 1:
+            self.error_sum("Suma wag kryteriów musi wynosić 1,\naby można było zastosować metodę topsis")
+            return
+        elif 0 in self.weights:
+            self.error_sum("Proszę nadać niezerową wagę wszystkim wybranym kryteriom.\nW celu usunięcia kryterium można wrócić do Menu.")
+            return
         self.gui.database.update_parameters(self.criteria)
         self.ranking = MetodaTopsis(self.gui.database.get_parameters(),self.weights)
         self.ranking = self.ranking.run_algorithm()
-        self.go_to_ranking()
+        if self.sum_weights == 1 and 0 not in self.weights:
+            self.gui.show_ranking(Screen.TOPSIS,self.criteria,self.ranking)

@@ -178,7 +178,7 @@ class Ui_UtaScreen:
     
     def error_give_all_inputs(self):
         msg = QtWidgets.QMessageBox()
-        msg.setText("Proszę w każde okienko wpisać liczbę dodatnią.")
+        msg.setText("Proszę w każde okienko wpisać liczbę dodatnią.\nLiczby należy także ułożyć rosnąco z ostatnią wartością równą 1.")
         msg.setIcon(QtWidgets.QMessageBox.Critical)
         msg.exec_()
         
@@ -191,15 +191,21 @@ class Ui_UtaScreen:
                 try:
                     number = float(input.text())
                     final_column.append(number)
-                    if not(number > 0):
+                    if not(number > 0 and number <= 1 and number <= final_column[-1]):
                         raise ValueError
                 except ValueError:
                     self.error_give_all_inputs()
                     return
-            self.final_usefulness.append(final_column)
+            if final_column[-1] == 1:
+                self.final_usefulness.append(final_column)
+            else:
+                self.error_give_all_inputs()
+                return
+            
         first_row_sum = 0
         for lst in self.final_usefulness:
             first_row_sum += lst[0]
+        
         if first_row_sum == 1:
             self.gui.show_ranking(Screen.UTA,self.criteria,self.ranking)
         else:
@@ -212,7 +218,12 @@ class Ui_UtaScreen:
         for row in range(len(self.usefulness_fcn)):
             usefulness_row = []
             for col in range(len(self.usefulness_fcn[row])):
-                usefulness_row.append(float(self.usefulness_fcn[row][col].text()))
+                try:
+                    number = float(self.usefulness_fcn[row][col].text())
+                    usefulness_row.append(number)
+                except ValueError:
+                    self.error_give_all_inputs()
+                    return
             usefulness_values.append(usefulness_row)
         
         self.ranking = UTA(self.gui.database,usefulness_values)

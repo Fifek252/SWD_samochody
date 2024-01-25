@@ -2,6 +2,7 @@ from typing import List, Union, Dict, Tuple
 import numpy as np
 from math import inf
 from car import Cars
+from PyQt5.QtWidgets import QMessageBox
 
 """ _____________
 |  ________  |    o   o
@@ -40,7 +41,12 @@ class RSM:
 
         
         self.__consistent_classes()
-
+        if len(self.a0) == 0 or len(self.a1) == 0:
+            msg = QMessageBox()
+            msg.setText("Zbiory status-quo i aspiracji nie zostały poprawnie utworzone.\nPunkty aspiracji powinny dominować punkty status-quo.")
+            msg.setIcon(QMessageBox.Critical)
+            msg.exec_()
+            return
         self.__calculate_weights()
 
 

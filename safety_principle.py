@@ -1,7 +1,7 @@
 from typing import List, Union, Dict, Tuple
 import math
 from car import Cars
-
+from PyQt5.QtWidgets import QMessageBox
 """ _____________
 |  ________  |    o   o
 | |  |____|  |    \__/
@@ -86,7 +86,13 @@ class SP:
 
         self.__naiveOWDfilterU()
 
-        #self.__consistent_classes()
+        self.__consistent_classes()
+        if len(self.a0) == 0 or len(self.a1) == 0:
+            msg = QMessageBox()
+            msg.setText("Zbiory status-quo i aspiracji nie zostały poprawnie utworzone.\nPunkty aspiracji powinny dominować punkty status-quo.")
+            msg.setIcon(QMessageBox.Critical)
+            msg.exec_()
+            return
 
         wyznaczone_punkty = self.wyznaczKrzywaSzkieletowa(self.a0[0], self.a1[0])
         self.oblicz_wage(wyznaczone_punkty)
