@@ -96,12 +96,14 @@ class MetodaTopsis:
 
             # odleglosc idealna
             for i in range(len(wartosc)):
-                odleglosc_idealna += self.wagi[i] * ((wartosc[i] - self.punkt_idealny_znormalizowany[i]) ** 2)
-
+                odleglosc_idealna += (wartosc[i] - self.punkt_idealny_znormalizowany[i]) ** 2
+            odleglosc_idealna = math.sqrt(odleglosc_idealna)
+            
             # odleglosc antyidealna
             for i in range(len(wartosc)):
-                odleglosc_antyidealna += self.wagi[i] * ((wartosc[i] - self.punkt_antyidealny_znormalizowany[i]) ** 2)
-
+                odleglosc_antyidealna += (wartosc[i] - self.punkt_antyidealny_znormalizowany[i]) ** 2
+            odleglosc_antyidealna = math.sqrt(odleglosc_antyidealna)
+            
             self.wspolczynniki_skorigowane.append([id, odleglosc_antyidealna/(odleglosc_antyidealna + odleglosc_idealna)])
 
 
@@ -126,13 +128,13 @@ class MetodaTopsis:
         for index, wartosc in self.zbior_decyzji.items():
             self.zbior_decyzji_Znormalizowany[index] = []
             for i in range(len(norma)):
-                self.zbior_decyzji_Znormalizowany[index].append(wartosc[i] / norma[i])
+                self.zbior_decyzji_Znormalizowany[index].append(self.wagi[i] * (wartosc[i] / norma[i]))
 
         # znormalizuj wartosci w kolumnach zbioru niezdominowanego
         for index, wartosc in self.zbior_niezdominowany.items():
             self.zbior_niezdominowany_znormalizowany[index] = []
             for i in range(len(norma)):
-                self.zbior_niezdominowany_znormalizowany[index].append(wartosc[i] / norma[i])
+                self.zbior_niezdominowany_znormalizowany[index].append(self.wagi[i] * (wartosc[i] / norma[i]))
 
 
     def run_algorithm(self):
