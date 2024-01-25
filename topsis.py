@@ -80,7 +80,7 @@ class MetodaTopsis:
 
 
     def utworzRankingRozwiazan(self):
-        sorted_list = sorted(self.wspolczynniki_skorigowane, key=lambda x: x[1])
+        sorted_list = sorted(self.wspolczynniki_skorigowane, key=lambda x: x[1], reverse=True)
 
         ostateczne_rozwiazanie = {}
         for result in sorted_list:
