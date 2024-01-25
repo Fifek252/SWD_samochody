@@ -88,8 +88,3 @@ class Gui:
         sys.exit(self.app.exec_())
         
 
-if __name__ == "__main__":
-    database = Cars("bazadanych.xlsx")
-    gui = Gui(database)
-    gui.run()
-    
