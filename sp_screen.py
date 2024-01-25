@@ -10,6 +10,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from screen import Screen
+
 from safety_principle import SP
 
 INPUT_X = 30
@@ -35,7 +36,7 @@ class Point:
 
 class Ui_SpScreen:
     def __init__(self, SpScreen,gui,criteria):
-        self.criteria = criteria
+        self.criteria = sorted(criteria)
         self.gui = gui
         self.trashcan = QtGui.QIcon("trashcan.png")
         SpScreen.setObjectName("SpScreen")
@@ -52,7 +53,7 @@ class Ui_SpScreen:
         self.background.setObjectName("background")
         
         self.tytul = QtWidgets.QLabel(self.centralwidget)
-        self.tytul.setGeometry(QtCore.QRect(180, 300, 421, 61))
+        self.tytul.setGeometry(QtCore.QRect(180, 270, 421, 61))
         self.tytul.setStyleSheet("border-color: rgb(159, 255, 124);")
         self.tytul.setObjectName("tytul")
         
@@ -76,12 +77,12 @@ class Ui_SpScreen:
         self.aspiracje.setAlignment(QtCore.Qt.AlignTop | QtCore.Qt.AlignLeft)
         
         self.menu = QtWidgets.QPushButton(self.centralwidget)
-        self.menu.setGeometry(QtCore.QRect(20, 270, 111, 41))
+        self.menu.setGeometry(QtCore.QRect(20, 240, 111, 41))
         self.menu.setObjectName("menu_rsm")
         self.menu.clicked.connect(lambda: self.gui.show_main())
         
         self.type_info = QtWidgets.QLabel(self.centralwidget)
-        self.type_info.setGeometry(INPUT_X+70,INPUT_Y_START-55,140,20)
+        self.type_info.setGeometry(INPUT_X+70,INPUT_Y_START-70,140,20)
         self.type_info.setText("Utwórz punkt:")
         self.type_info.setStyleSheet("color: white;")
         self.type_info.setFont(QtGui.QFont("Arial",8))
@@ -113,7 +114,7 @@ class Ui_SpScreen:
     def retranslateUi(self, SpScreen):
         _translate = QtCore.QCoreApplication.translate
         SpScreen.setWindowTitle(_translate("SpScreen", "SpScreen"))
-        self.tytul.setText(_translate("SpScreen", "<html><head/><body><p align=\"center\"><span style=\" font-size:20pt; font-weight:600; color:#ffffff;\">Metoda Safety Principle</span></p><p align=\"center\"><br/></p></body></html>"))
+        self.tytul.setText(_translate("SpScreen", "<html><head/><body><p align=\"center\"><span style=\" font-size:20pt; font-weight:600; color:#ffffff;\">Metoda Safety Principle </span></p><p align=\"center\"><br/></p></body></html>"))
 
         self.menu.setText(_translate("SpScreen", "Menu"))
         
@@ -126,14 +127,14 @@ class Ui_SpScreen:
         self.crits = []
 
         self.asp_checkbox = QtWidgets.QCheckBox(self.centralwidget)
-        self.asp_checkbox.setGeometry(QtCore.QRect(INPUT_X,INPUT_Y_START-30,140,41))
+        self.asp_checkbox.setGeometry(QtCore.QRect(INPUT_X,INPUT_Y_START-50,140,41))
         self.asp_checkbox.setObjectName("asp_checkbox")
         self.asp_checkbox.setText("Aspiracji")
         self.asp_checkbox.setStyleSheet("color: yellow;")
         self.asp_checkbox.stateChanged.connect(lambda: self.switch_aspiration())
         
         self.quo_checkbox = QtWidgets.QCheckBox(self.centralwidget)
-        self.quo_checkbox.setGeometry(QtCore.QRect(INPUT_X+140,INPUT_Y_START-30,140,41))
+        self.quo_checkbox.setGeometry(QtCore.QRect(INPUT_X+140,INPUT_Y_START-50,140,41))
         self.quo_checkbox.setObjectName("quo_checkbox")
         self.quo_checkbox.setText("Status-quo")
         self.quo_checkbox.setStyleSheet("color: yellow;")
@@ -150,14 +151,14 @@ class Ui_SpScreen:
         self.enter_idx = 1
         for i,crit in enumerate(sorted(self.criteria)):
             crit_label = QtWidgets.QLabel(self.centralwidget)
-            crit_label.setGeometry(QtCore.QRect(INPUT_X, INPUT_Y_START+i*50 + 30, 140, 41))
+            crit_label.setGeometry(QtCore.QRect(INPUT_X, INPUT_Y_START+i*50, 140, 41))
             crit_label.setObjectName(crit)
             crit_label.setText(f"{crit}:")
             crit_label.setStyleSheet("color: white;")
             self.crits.append(crit_label)
             
             input = QtWidgets.QLineEdit(self.centralwidget)
-            input.setGeometry(QtCore.QRect(INPUT_X+150,INPUT_Y_START+i*50 + 30,100,40))
+            input.setGeometry(QtCore.QRect(INPUT_X+150,INPUT_Y_START+i*50,100,40))
             input.setObjectName(f"weight_{crit}")
             input.setStyleSheet("color: black;")
             input.setFont(QtGui.QFont("Arial",12))
@@ -169,7 +170,7 @@ class Ui_SpScreen:
             self.enter_idx += 1
             
         self.enter = QtWidgets.QPushButton(self.centralwidget)
-        self.enter.setGeometry(QtCore.QRect(INPUT_X+70,INPUT_Y_START+self.enter_idx*50,101,28))
+        self.enter.setGeometry(QtCore.QRect(INPUT_X+70,INPUT_Y_START+self.enter_idx*50-30,101,28))
         self.enter.setObjectName("enter")
         self.enter.setText("Wprowadż")
         self.enter.clicked.connect(lambda: self.create_point())
@@ -253,7 +254,7 @@ class Ui_SpScreen:
             point = Point(self.quo_list,self.criteria)
             self.quo_points.append(point.get_point())
             self.quo_list = [0 for _ in self.criteria]
-            self.status_quo.setText(ASPIRACJE_TEXT + '\n' + '\n'.join([' '.join(map(str, [abs(value) for value in sublist])) for sublist in self.quo_points]))
+            self.status_quo.setText(STATUS_QUO_TEXT + '\n' + '\n'.join([' '.join(map(str, [abs(value) for value in sublist])) for sublist in self.quo_points]))
             for text_edit in self.inputs:
                 text_edit.setStyleSheet("background-color: #ffffff;")
                 text_edit.clear()
@@ -269,7 +270,9 @@ class Ui_SpScreen:
         msg.setText("Proszę utworzyć przynajmniej 1 punkt aspiracji i status-quo")
         msg.setIcon(QtWidgets.QMessageBox.Critical)
         msg.exec_()
-        
+
+
+    
     def clear_asp_points(self):
         self.asp_points.clear()
         self.aspiracje.setText(ASPIRACJE_TEXT +"\n[]")
@@ -277,9 +280,7 @@ class Ui_SpScreen:
     def clear_quo_points(self):
         self.quo_points.clear()
         self.status_quo.setText(STATUS_QUO_TEXT +"\n[]")
-
-
-    
+        
     def do_sp(self):
         if not(len(self.asp_points) >= 1 and len(self.quo_points) >= 1):
             self.error_zero_points()

@@ -14,7 +14,7 @@ from uta_screen import Ui_UtaScreen
 from database import Ui_DatabaseScreen
 from typing import Dict,Union,List
 import pandas as pd
-from car import Cars
+
 
 class Gui:
     '''

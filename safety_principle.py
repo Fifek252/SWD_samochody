@@ -87,6 +87,7 @@ class SP:
         self.__naiveOWDfilterU()
 
         self.__consistent_classes()
+        print(self.a0, self.a1)
         if len(self.a0) == 0 or len(self.a1) == 0:
             msg = QMessageBox()
             msg.setText("Zbiory status-quo i aspiracji nie zostały poprawnie utworzone.\nPunkty aspiracji powinny dominować punkty status-quo.")
@@ -138,15 +139,14 @@ class SP:
         for key in self.U.keys():
             n = len(self.U[key])
             break
-
+        
         U = self.U.copy()
         keys_to_remove = []
         checked_keys = []
 
         for keyY in U.keys():
             for keyX in U.keys():
-                if not (
-                        keyY == keyX or keyY in keys_to_remove or keyY in checked_keys or keyX in keys_to_remove or keyX in checked_keys):
+                if not (keyY == keyX or keyY in keys_to_remove or keyY in checked_keys or keyX in keys_to_remove or keyX in checked_keys):
                     if all(U[keyY][i] <= U[keyX][i] for i in range(n)):
                         if not all(U[keyY][i] == U[keyX][i] for i in range(n)):
                             keys_to_remove.append(keyX)
@@ -158,13 +158,14 @@ class SP:
 
         for key in keys_to_remove:
             U.pop(key)
-        self.U = U
+        self.U = U 
+    
 
     def __naiveOWDfilterA(self, A: List[List[Union[int, float]]]) -> List[List[Union[int, float]]]:
         """
         Function deletes dominated points from status quo and destination set
         :param A: list of status quo or destination points
-        :return: list of undominated status quo or destination points
+        :return: list of undominated status quo or destination points 
         """
         m, n = len(A), len(A[0])
         X = A.copy()
@@ -215,6 +216,7 @@ class SP:
                         j += 1
                 i += 1
         return X
+
 
     def __consistent_classes(self):
         """

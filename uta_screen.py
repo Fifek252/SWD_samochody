@@ -22,7 +22,7 @@ class Ui_UtaScreen:
         self.background.setObjectName("background")
         
         self.tytul = QtWidgets.QLabel(self.centralwidget)
-        self.tytul.setGeometry(QtCore.QRect(180, 100, 421, 61))
+        self.tytul.setGeometry(QtCore.QRect(180, 250, 421, 61))
         self.tytul.setStyleSheet("border-color: rgb(159, 255, 124);")
         self.tytul.setObjectName("tytul")
         
@@ -206,7 +206,7 @@ class Ui_UtaScreen:
         for lst in self.final_usefulness:
             first_row_sum += lst[0]
         
-        if first_row_sum == 1:
+        if round(first_row_sum,1) == 1:
             self.gui.show_ranking(Screen.UTA,self.criteria,self.ranking)
         else:
             self.error_first_row_sum()
